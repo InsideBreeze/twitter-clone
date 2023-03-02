@@ -14,12 +14,12 @@ import SidebarLink from "./SidebarLink";
 
 const Sidebar = () => {
   return (
-    <div className="hidden sm:flex flex-col xl:w-[140px]  items-start pt-2 fixed xl:ml-12">
-      <div className="hoverAnimation p-3">
+    <div className="hidden sm:flex flex-col xl:w-[240px]  md:pl-10 items-start pt-2 fixed xl:ml-2 h-full">
+      <div className="p-3 hoverAnimation">
         <img
           src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
           alt=""
-          className="h-8 w-8"
+          className="w-8 h-8"
         />
       </div>
       <div className="text-[#d9d9d9]  flex flex-col mt-4 items-start justify-center">
@@ -40,17 +40,17 @@ const Sidebar = () => {
           Tweet
         </button>
         {/* user info */}
-        <div className="text-white mt-12 xl:ml-1 hoverAnimation">
+        <div className="mt-12 text-white xl:ml-1 hoverAnimation">
           <img
             src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"
             alt=""
-            className="h-9 w-9 rounded-full"
+            className="rounded-full h-9 w-9"
           />
-          <div className="ml-3 hidden xl:block">
+          <div className="hidden ml-3 xl:block">
             <h4>firebase 1873</h4>
-            <p className="text-gray-400 text-sm">@firebase1873</p>
+            <p className="text-sm text-gray-400">@firebase1873</p>
           </div>
-          <EllipsisHorizontalIcon className="h-5 w-5 ml-auto hidden xl:inline" />
+          <EllipsisHorizontalIcon className="hidden w-5 h-5 ml-auto xl:inline" />
         </div>
       </div>
     </div>
