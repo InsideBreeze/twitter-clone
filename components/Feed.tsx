@@ -4,7 +4,7 @@ import Input from "./Input";
 
 const Feed = () => {
   return (
-    <div className="text-white xl:mx-[260px] md:mx-24 sm:mx-10 border-gray-600 sm:border-l md:border-r flex-1 overflow-y-scroll scrollbar-hide">
+    <div className="text-white xl:mx-[270px] md:mx-26 sm:mx-12 border-gray-600 sm:border-l md:border-r flex-1 overflow-y-scroll scrollbar-hide">
       {/* header */}
       <div className="sticky top-0 z-50 flex items-center justify-between p-3 pt-1 bg-black border-b border-gray-600 md:p-4">
         <h2 className="font-semibold cursor-pointer md:text-xl">Home</h2>

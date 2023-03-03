@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
+import { useSession } from "next-auth/react";
 
 const Input = () => {
   const filePickerRef = useRef<HTMLInputElement>(null);
@@ -25,6 +26,8 @@ const Input = () => {
     null
   );
   const [loading, setLoading] = useState<Boolean>(false);
+
+  const { data: session } = useSession();
 
   const attachFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader = new FileReader();
@@ -66,21 +69,21 @@ const Input = () => {
   };
   return (
     <div
-      className={`flex p-2 px-5 mt-2 space-x-2 ${
+      className={`flex p-2 items-start px-5 mt-2 space-x-2 ${
         loading && "opacity-50"
       } border-b border-gray-700`}
     >
       <img
-        src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"
+        src={session?.user.image}
         alt=""
-        className="w-10 h-10 rounded-full"
+        className="w-10 h-10 rounded-full cursor-pointer"
       />
       <div className="relative flex flex-col w-full">
         <textarea
           name=""
           id=""
           rows={2}
-          className={`bg-transparent outline-none min-h-[49px] lg:text-base pt-4 md:placeholder:text-lg 
+          className={`bg-transparent outline-none min-h-[49px] lg:text-base pt-1 md:placeholder:text-lg 
           placeholder:text-gray-401  overflow-y-scroll scrollbar-hide`}
           placeholder="What's happening?"
           value={input}

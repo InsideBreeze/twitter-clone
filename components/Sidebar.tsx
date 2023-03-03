@@ -11,10 +11,12 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 import SidebarLink from "./SidebarLink";
+import { useSession, signOut } from "next-auth/react";
 
 const Sidebar = () => {
+  const { data: session } = useSession();
   return (
-    <div className="hidden sm:flex flex-col xl:w-[240px]  md:pl-10 items-start pt-2 fixed xl:ml-2 h-full">
+    <div className="hidden sm:flex flex-col xl:w-[260px]  md:pl-10 items-start pt-2 fixed xl:ml-2 h-full bg-[refd]">
       <div className="p-3 hoverAnimation">
         <img
           src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
@@ -42,13 +44,14 @@ const Sidebar = () => {
         {/* user info */}
         <div className="mt-12 text-white xl:ml-1 hoverAnimation">
           <img
-            src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png"
+            src={session?.user?.image}
             alt=""
-            className="rounded-full h-9 w-9"
+            className="w-10 h-10 rounded-full"
+            onClick={() => signOut()}
           />
           <div className="hidden ml-3 xl:block">
-            <h4>firebase 1873</h4>
-            <p className="text-sm text-gray-400">@firebase1873</p>
+            <h4>{session?.user?.name}</h4>
+            <p className="text-sm text-gray-400">@{session?.user?.tag}</p>
           </div>
           <EllipsisHorizontalIcon className="hidden w-5 h-5 ml-auto xl:inline" />
         </div>
