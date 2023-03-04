@@ -74,21 +74,20 @@ const Input = () => {
   };
   return (
     <div
-      className={`flex p-2 items-start px-5 mt-2 space-x-2 ${
-        loading && "opacity-50"
-      } border-b border-gray-700`}
+      className={`flex p-2 items-start px-5 mt-2 space-x-2 ${loading && "opacity-50"
+        } border-b border-gray-700`}
     >
       <img
         src={session?.user?.image ?? ""}
         alt=""
         className="w-10 h-10 rounded-full cursor-pointer"
       />
-      <div className="relative flex flex-col w-full">
+      <div className="relative flex flex-col w-full ">
         <textarea
           name=""
           id=""
           rows={2}
-          className={`bg-transparent outline-none min-h-[49px] lg:text-base pt-1 md:placeholder:text-lg active:gray-b focus:boder-gray-800 
+          className={`bg-transparent outline-none min-h-[49px] lg:text-base pt-1 md:placeholder:text-lg
           placeholder:text-gray-401  overflow-y-scroll scrollbar-hide`}
           placeholder="What's happening?"
           value={input}
@@ -119,7 +118,7 @@ const Input = () => {
           </div>
         )}
         {!loading && (
-          <div className="flex justify-between p-2 border-gray-700 border-">
+          <div className="flex justify-between p-2 border-gray-700 border-t">
             <div className="flex text-[#1D9BF0]">
               <div
                 className="icon w-9 h-9"

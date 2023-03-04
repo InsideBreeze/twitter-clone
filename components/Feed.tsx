@@ -3,6 +3,8 @@ import {
   collection,
   DocumentData,
   onSnapshot,
+  orderBy,
+  query,
   QueryDocumentSnapshot,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
@@ -13,9 +15,10 @@ import Post from "./Post";
 const Feed = () => {
   const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
 
+  const q = query(collection(db, "posts"), orderBy("timestamp", "desc"));
   useEffect(
     () =>
-      onSnapshot(collection(db, "posts"), (snapshot) => {
+      onSnapshot(q, (snapshot) => {
         setPosts(snapshot.docs);
       }),
     [db]
