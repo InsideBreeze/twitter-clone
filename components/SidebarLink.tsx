@@ -10,9 +10,11 @@ const SidebarLink = ({
   active?: boolean;
 }) => {
   return (
-    <div className="flex space-x-2 items-center justify-center hoverAnimation">
-      <Icon className="h-8 w-8" />
-      <span className="hidden xl:inline">{text}</span>
+    <div className="flex items-center justify-center space-x-2 hoverAnimation">
+      <Icon className="w-8 h-8" />
+      <span className={`hidden xl:inline ${active && "font-bold"}`}>
+        {text}
+      </span>
     </div>
   );
 };

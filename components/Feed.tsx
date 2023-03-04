@@ -1,10 +1,27 @@
 import { SparklesIcon } from "@heroicons/react/24/outline";
-import React from "react";
+import {
+  collection,
+  DocumentData,
+  onSnapshot,
+  QueryDocumentSnapshot,
+} from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { db } from "../firebase";
 import Input from "./Input";
+import Post from "./Post";
 
 const Feed = () => {
+  const [posts, setPosts] = useState<QueryDocumentSnapshot<DocumentData>[]>([]);
+
+  useEffect(
+    () =>
+      onSnapshot(collection(db, "posts"), (snapshot) => {
+        setPosts(snapshot.docs);
+      }),
+    [db]
+  );
   return (
-    <div className="text-white xl:mx-[270px] md:mx-26 sm:mx-12 border-gray-600 sm:border-l md:border-r flex-1 overflow-y-scroll scrollbar-hide">
+    <div className="text-white xl:mx-[240px] md:mx-[110px] sm:mx-12 border-gray-600 sm:border-l md:border-r flex-1 overflow-y-scroll scrollbar-hide">
       {/* header */}
       <div className="sticky top-0 z-50 flex items-center justify-between p-3 pt-1 bg-black border-b border-gray-600 md:p-4">
         <h2 className="font-semibold cursor-pointer md:text-xl">Home</h2>
@@ -14,6 +31,10 @@ const Feed = () => {
       </div>
       {/* input */}
       <Input />
+      {/* posts */}
+      {posts.map((post) => (
+        <Post key={post.id} id={post.id} post={post.data()} />
+      ))}
     </div>
   );
 };

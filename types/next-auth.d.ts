@@ -7,8 +7,13 @@ declare module "next-auth" {
   interface Session {
     user: {
       /** The user's postal address. */
-      tag: string | undefined;
-      uid: string | undefined;
+      tag: string;
+      uid: string;
     } & DefaultSession["user"];
   }
 }
+
+export type Providers = Record<
+  LiteralUnion<BuiltInProviderType, string>,
+  ClientSafeProvider
+> | null;

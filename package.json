@@ -9,6 +9,7 @@
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@heroicons/react": "^2.0.16",
+    "dayjs": "^1.11.7",
     "emoji-mart": "^5.5.2",
     "firebase": "^9.17.1",
     "next": "latest",

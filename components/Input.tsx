@@ -47,9 +47,14 @@ const Input = () => {
     }
     setLoading(true);
     const docRef = await addDoc(collection(db, "posts"), {
+      id: session?.user.uid,
+      posterName: session?.user.name,
+      posterAvatar: session?.user.image,
       text: input,
+      tag: session?.user.tag,
       timestamp: serverTimestamp(),
     });
+
     if (selectedFile) {
       const imageRef = ref(storage, `images/${docRef.id}/image`);
       // https://firebase.google.com/docs/storage/web/upload-files
@@ -74,7 +79,7 @@ const Input = () => {
       } border-b border-gray-700`}
     >
       <img
-        src={session?.user.image}
+        src={session?.user?.image ?? ""}
         alt=""
         className="w-10 h-10 rounded-full cursor-pointer"
       />
@@ -83,7 +88,7 @@ const Input = () => {
           name=""
           id=""
           rows={2}
-          className={`bg-transparent outline-none min-h-[49px] lg:text-base pt-1 md:placeholder:text-lg 
+          className={`bg-transparent outline-none min-h-[49px] lg:text-base pt-1 md:placeholder:text-lg active:gray-b focus:boder-gray-800 
           placeholder:text-gray-401  overflow-y-scroll scrollbar-hide`}
           placeholder="What's happening?"
           value={input}
@@ -114,10 +119,10 @@ const Input = () => {
           </div>
         )}
         {!loading && (
-          <div className="flex justify-between p-2 border-t border-gray-700">
+          <div className="flex justify-between p-2 border-gray-700 border-">
             <div className="flex text-[#1D9BF0]">
               <div
-                className="icon"
+                className="icon w-9 h-9"
                 onClick={() => filePickerRef.current?.click()}
               >
                 <PhotoIcon className="w-6 h-6" />
@@ -129,13 +134,16 @@ const Input = () => {
                 onChange={attachFile}
               />
 
-              <div className="rotate-90 icon">
+              <div className="rotate-90 icon w-9 h-9">
                 <ChartBarIcon className="w-6 h-6" />
               </div>
-              <div className="icon" onClick={() => setShowEmoji(!showEmoji)}>
+              <div
+                className="icon h-9 w-9"
+                onClick={() => setShowEmoji(!showEmoji)}
+              >
                 <FaceSmileIcon className="w-6 h-6" />
               </div>
-              <div className="icon">
+              <div className="icon h-9 w-9">
                 <CalendarIcon className="w-6 h-6" />
               </div>
             </div>

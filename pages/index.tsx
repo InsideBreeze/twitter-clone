@@ -4,9 +4,9 @@ import Feed from "../components/Feed";
 import Sidebar from "../components/Sidebar";
 import { getProviders, getSession, useSession } from "next-auth/react";
 import Login from "../components/Login";
+import { Providers } from "../types/next-auth";
 const Home: NextPage = ({ providers }) => {
   const { data: session } = useSession();
-  console.log(session, "session");
   if (!session) {
     return <Login providers={providers} />;
   }

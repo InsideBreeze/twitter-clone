@@ -16,7 +16,7 @@ import { useSession, signOut } from "next-auth/react";
 const Sidebar = () => {
   const { data: session } = useSession();
   return (
-    <div className="hidden sm:flex flex-col xl:w-[260px]  md:pl-10 items-start pt-2 fixed xl:ml-2 h-full bg-[refd]">
+    <div className="hidden sm:flex flex-col xl:w-[260px]  md:ml-10 md:w-[150px] items-start pt-2 fixed xl:ml-4 h-full bg-[refd]">
       <div className="p-3 hoverAnimation">
         <img
           src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
@@ -26,10 +26,10 @@ const Sidebar = () => {
       </div>
       <div className="text-[#d9d9d9]  flex flex-col mt-4 items-start justify-center">
         <SidebarLink text="Home" Icon={HomeIcon} active />
-        <SidebarLink text="Explore" Icon={HashtagIcon} active />
-        <SidebarLink text="Notificatons" Icon={BellIcon} active />
-        <SidebarLink text="Messages" Icon={InboxIcon} active />
-        <SidebarLink text="Bookmarks" Icon={BookmarkIcon} active />
+        <SidebarLink text="Explore" Icon={HashtagIcon} />
+        <SidebarLink text="Notificatons" Icon={BellIcon} />
+        <SidebarLink text="Messages" Icon={InboxIcon} />
+        <SidebarLink text="Bookmarks" Icon={BookmarkIcon} />
         <SidebarLink text="Lists" Icon={ClipboardDocumentListIcon} />
         <SidebarLink text="Profile" Icon={UserIcon} />
         <SidebarLink text="More" Icon={EllipsisHorizontalCircleIcon} />
@@ -44,7 +44,7 @@ const Sidebar = () => {
         {/* user info */}
         <div className="mt-12 text-white xl:ml-1 hoverAnimation">
           <img
-            src={session?.user?.image}
+            src={session?.user?.image ?? ""}
             alt=""
             className="w-10 h-10 rounded-full"
             onClick={() => signOut()}
