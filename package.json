@@ -8,10 +8,12 @@
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
+    "@headlessui/react": "^1.7.13",
     "@heroicons/react": "^2.0.16",
     "dayjs": "^1.11.7",
     "emoji-mart": "^5.5.2",
     "firebase": "^9.17.1",
+    "jotai": "^2.0.3",
     "next": "latest",
     "next-auth": "^4.20.1",
     "react": "18.2.0",

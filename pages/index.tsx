@@ -5,8 +5,12 @@ import Sidebar from "../components/Sidebar";
 import { getProviders, getSession, useSession } from "next-auth/react";
 import Login from "../components/Login";
 import { Providers } from "../types/next-auth";
+import CommentModal from "../components/CommentModal";
+import { useAtomValue } from "jotai";
+import { isOpenAtom } from "../atoms/modalAtom";
 const Home: NextPage = ({ providers }) => {
   const { data: session } = useSession();
+  const isOpen = useAtomValue(isOpenAtom);
   if (!session) {
     return <Login providers={providers} />;
   }
@@ -21,6 +25,8 @@ const Home: NextPage = ({ providers }) => {
         <Sidebar />
         {/* Feed */}
         <Feed />
+        {/* Modal */}
+        {isOpen && <CommentModal />}
       </main>
     </div>
   );
