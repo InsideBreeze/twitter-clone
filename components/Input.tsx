@@ -74,8 +74,9 @@ const Input = () => {
   };
   return (
     <div
-      className={`flex p-2 items-start px-5 mt-2 space-x-2 ${loading && "opacity-50"
-        } border-b border-gray-700`}
+      className={`flex p-2 items-start px-5 mt-2 space-x-2 ${
+        loading && "opacity-50"
+      } border-b border-gray-700`}
     >
       <img
         src={session?.user?.image ?? ""}

@@ -28,7 +28,7 @@ const PostPage = ({ providers }) => {
 
   useEffect(
     () =>
-      onSnapshot(collection(db, "posts", id), (snapshot) => {
+      onSnapshot(collection(db, "posts", id, "replies"), (snapshot) => {
         setReplies(snapshot.docs);
       }),
     [db, id]
