@@ -44,11 +44,19 @@ export default function MyModal() {
   );
 
   const sendReply = async () => {
-    await addDoc(collection(db, "posts", postId, "replies"), {
-      comment: reply,
-      commentor: session?.user?.name,
-      tag: session?.user?.tag,
-      userImg: session?.user?.image,
+    // await addDoc(collection(db, "posts", postId, "replies"), {
+    //   comment: reply,
+    //   commentor: session?.user?.name,
+    //   tag: session?.user?.tag,
+    //   userImg: session?.user?.image,
+    //   timestamp: serverTimestamp(),
+    // });
+    await addDoc(collection(db, "posts"), {
+      id: session?.user.uid,
+      posterName: session?.user.name,
+      posterAvatar: session?.user.image,
+      text: reply,
+      tag: session?.user.tag,
       timestamp: serverTimestamp(),
     });
     setIsOpen(false);

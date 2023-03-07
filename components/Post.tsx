@@ -13,6 +13,7 @@ import {
   ArrowsRightLeftIcon,
   ChartBarIcon,
   ChatBubbleLeftIcon,
+  EllipsisHorizontalIcon,
   HeartIcon,
   ShareIcon,
   TrashIcon,
@@ -27,7 +28,15 @@ import { postIdAtom } from "../atoms/postIdAtom";
 
 dayjs.extend(relativeTime);
 
-const Post = ({ id, post }: { id: string; post: DocumentData }) => {
+const Post = ({
+  id,
+  post,
+  isPostPage,
+}: {
+  id: string;
+  post: DocumentData;
+  isPostPage: Boolean;
+}) => {
   const { data: session } = useSession();
   const router = useRouter();
 
@@ -81,33 +90,58 @@ const Post = ({ id, post }: { id: string; post: DocumentData }) => {
       onClick={() => router.push(`/${post?.tag}/${id}`)}
     >
       <img
-        src={post.posterAvatar}
+        src={post?.posterAvatar}
         alt=""
         className="rounded-full h-10 w-10 hover:opacity-90"
       />
       <div className="flex flex-col items-start w-full">
-        <div className="flex items-center space-x-1">
-          <h4 className="hover:underline">{post.posterName}</h4>{" "}
-          <div className="">
-            <span className="text-[#71767b]">
-              @{post.tag}
-              {" · "}
-            </span>
+        <div className="flex items-center w-full">
+          <div className={`${!isPostPage && "flex"}`}>
+            <span className="hover:underline mr-1">{post?.posterName}</span>{" "}
+            <div className="ml-">
+              <span className={`text-[#71767b] ${isPostPage && "block"}`}>
+                @{post?.tag}
+                {!isPostPage && " · "}
+              </span>
+            </div>
+          </div>
+          {!isPostPage && (
             <span className="text-[#71767b]">
               {dayjs(post?.timestamp?.toDate()).toNow(true)}
             </span>
+          )}
+          <div className="hoverAnimation p-0 ml-auto h-8 w-8 text-[#71767b] hover:text-[#0D9BF0] hover:bg-[[#0D9BF0] hover:bg-opacity-20">
+            <EllipsisHorizontalIcon className="h-6 w-6" />
           </div>
         </div>
-        <p>{post.text}</p>
-        <div className="">
+        <div className={`${isPostPage && "-ml-[52px]"} w-full`}>
+          <p>{post?.text}</p>
           <img
-            src={post.image}
+            src={post?.image}
             alt=""
             className="max-h-[350px] object-cover rounded-xl"
           />
+          {isPostPage && (
+            <>
+              <p className="py-2">
+                {dayjs(post?.timestamp?.toDate()).format(
+                  "H:mm A · MMM D, YYYY"
+                )}
+              </p>
+              {likes.length > 0 && (
+                <p className="py-3 border-y border-gray-600 w-full">
+                  {`${likes.length} Like${likes.length > 1 ? "s" : ""}`}
+                </p>
+              )}
+            </>
+          )}
         </div>
         {/* buttons */}
-        <div className="flex items-center justify-between  mt-2 w-full text-[#71767b]">
+        <div
+          className={`flex items-center justify-between  mt-2 w-full text-[#71767b] ${
+            isPostPage && "-ml-[12px]"
+          }`}
+        >
           <div className="flex space-x-1 items-center hover:text-[#0D9BF0]">
             <div
               className=" icon p-1 h-8 w-8 -ml-2 hover:bg-[#0D9BF0] hover:bg-opacity-20"
@@ -122,11 +156,11 @@ const Post = ({ id, post }: { id: string; post: DocumentData }) => {
             </div>
 
             <span className="w-[3px]">
-              {replies.length === 0 ? "" : replies.length}
+              {replies.length === 0 || isPostPage ? "" : replies.length}
             </span>
           </div>
 
-          {session?.user?.uid === post.id ? (
+          {session?.user?.uid === post?.id ? (
             <div
               className="icon hover:text-[red] h-8 w-8 hover:bg-[red] hover:bg-opacity-20"
               onClick={async (e) => {
@@ -164,7 +198,7 @@ const Post = ({ id, post }: { id: string; post: DocumentData }) => {
           <div className="icon h-8 w-8 hover:text-[#0D9BF0] hover:bg-[#0D9BF0] hover:bg-opacity-20">
             <ShareIcon className="w-[20px] h-[20px]" />
           </div>
-          <div className="icon h-8 w-8 mr-3 hover:text-[#0D9BF0] hover:bg-[bg-opacity-20]">
+          <div className="icon h-8 w-8 mr- hover:text-[#0D9BF0] hover:bg-[bg-opacity-20]">
             <ChartBarIcon className="w-[20px] h-[20px]" />
           </div>
         </div>
