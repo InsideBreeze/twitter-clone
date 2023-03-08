@@ -17,8 +17,10 @@ const Feed = () => {
     [db]
   );
   return (
-    <div className="text-white xl:ml-[250px] md:ml-[110px] sm:ml-12 border-gray-600 sm:border-l md:border-r flex-1
-          overflow-y-scroll scrollbar-hide w-[700px]">
+    <div
+      className="text-white xl:ml-[250px] md:ml-[110px] sm:ml-14 border-gray-600 sm:border-l md:border-r flex-1
+          overflow-y-scroll scrollbar-hide w-[700px]"
+    >
       {/* header */}
       <div className="sticky top-0 z-100 flex items-center p-2 pb-5 justify-between bg-black border-b border-gray-600 ">
         <h2 className="font-semibold cursor-pointer md:text-xl">Home</h2>

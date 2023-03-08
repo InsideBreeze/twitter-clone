@@ -4,7 +4,7 @@
 
 @layer components {
     .hoverAnimation {
-        @apply h-[52px] w-[52px] flex xl:w-auto xl:h-auto items-center 
+        @apply h-[54px] w-[54px] flex xl:w-auto xl:h-auto items-center 
         justify-center hover:bg-opacity-20 rounded-full hover:bg-[#d9d9d9] xl:py-2 xl:px-3
         cursor-pointer transition-all duration-200 ease-out
     }

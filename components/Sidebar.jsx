@@ -18,7 +18,7 @@ const Sidebar = () => {
   const { data: session } = useSession();
   const router = useRouter();
   return (
-    <div className="bg-[re hidden sm:flex flex-col xl:w-[250px] bg-[black] md:pl-10 md:w-[110px] items-start pt-2 fixed xl:pl-4 h-full sm:w-12">
+    <div className="bg-[re hidden sm:flex flex-col xl:w-[250px] bg-[black] md:pl-10 md:w-[110px] items-start pt-2 fixed xl:pl-4 h-full sm:w-14">
       <div className="p-3 hoverAnimation" onClick={() => router.push("/")}>
         <img
           src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
@@ -44,9 +44,9 @@ const Sidebar = () => {
           Tweet
         </button>
         {/* user info */}
-        <div className="mt-14 text-white xl:ml-1 hoverAnimation">
+        <div className="mt-12 text-white xl:ml-1 hoverAnimation">
           <img
-            src={session?.user?.image}
+            src={session?.user?.image ?? ""}
             alt=""
             className="w-10 h-10 rounded-full"
             onClick={() => signOut()}

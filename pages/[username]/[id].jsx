@@ -5,6 +5,8 @@ import {
   collection,
   doc,
   onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
 } from "firebase/firestore";
 import { getProviders, useSession } from "next-auth/react";
@@ -28,6 +30,10 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
   const [reply, setReply] = useState("");
 
   const isOpen = useAtomValue(isOpenAtom);
+  const q = query(
+    collection(db, "posts", id, "replies"),
+    orderBy("timestamp", "desc")
+  );
 
   useEffect(
     () =>
@@ -39,7 +45,7 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
 
   useEffect(
     () =>
-      onSnapshot(collection(db, "posts", id, "replies"), (snapshot) => {
+      onSnapshot(q, (snapshot) => {
         setReplies(snapshot.docs);
       }),
     [db, id]
