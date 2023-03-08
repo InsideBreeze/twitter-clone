@@ -50,6 +50,7 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
       comment: reply,
       commentor: session?.user?.name,
       tag: session?.user?.tag,
+      userImg: session?.user.image,
       timestamp: serverTimestamp(),
     });
     setReply("");
