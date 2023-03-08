@@ -106,7 +106,7 @@ const Post = ({
             </div>
           </div>
           {!isPostPage && (
-            <span className="text-[#71767b]">
+            <span className="ml-1 text-[#71767b]">
               {dayjs(post?.timestamp?.toDate()).toNow(true)}
             </span>
           )}

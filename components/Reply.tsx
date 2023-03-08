@@ -8,14 +8,7 @@ import {
   HeartIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
-
 dayjs.extend(relativeTime);
-
-// comment: reply,
-//    commentor: session?.user?.name,
-//    tag: session?.user?.tag,
-//    userImg: session?.user?.image,
-//    timestamp:
 
 const Reply = ({ reply }) => {
   return (
@@ -42,7 +35,7 @@ const Reply = ({ reply }) => {
         </p>
         <p>{reply.comment}</p>
         {/* icons */}
-        <div className="flex justify-between items-center ">
+        <div className="flex justify-between items-center text-[#71767b]">
           <div className=" icon p-1 h-8 w-8 -ml-2 hover:bg-[#0D9BF0] hover:bg-opacity-20  hover:text-[#0D9BF0]">
             <ChatBubbleLeftIcon className="w-[20px] h-[20px]" />
           </div>
