@@ -68,7 +68,7 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
   return (
     <div className="bg-black h-screen border-x border-gray-600 z-100 flex scrollbar-hide">
       <Sidebar />
-      <div className=" flex flex-col text-white h-full xl:ml-[250px] md:ml-[110px] sm:ml-12 flex-1 w-[700px] border-gray-600 border-x h-screen overflow-y-scroll scrollbar-hide">
+      <div className=" flex flex-col text-white h-full xl:ml-[250px] md:ml-[110px] sm:ml-14 flex-1 w-[700px] border-gray-600 border-x h-screen overflow-y-scroll scrollbar-hide">
         <div className="flex p-2 space-x-4 items-center">
           <div
             className="hoverAnimation p-2 cursor-pointer"
