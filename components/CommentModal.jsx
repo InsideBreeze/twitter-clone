@@ -24,10 +24,9 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-
 dayjs.extend(relativeTime);
 
-export default function MyModal() {
+export default function CommentModal() {
   const [isOpen, setIsOpen] = useAtom(isOpenAtom);
   const postId = useAtomValue(postIdAtom);
   const [post, setPost] = useState();
@@ -135,7 +134,6 @@ export default function MyModal() {
                             </span>
                             <span className="text-[#1D9BF0]">@{post?.tag}</span>
                           </p>
-
                           <span className="w-0.5 absolute -left-[30px] h-full bg-gray-600 -top-2 h-10" />
                         </div>
                       </div>

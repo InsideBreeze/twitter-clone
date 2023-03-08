@@ -67,7 +67,7 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
             className="hoverAnimation p-2 cursor-pointer"
             onClick={() => router.push("/")}
           >
-            <ArrowLeftIcon className="h-6 w-6" />
+            <ArrowLeftIcon className="h-5 w-5" />
           </div>
           <p className="font-semibold text-xl">Tweet</p>
         </div>

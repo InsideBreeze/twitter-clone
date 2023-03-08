@@ -2,7 +2,6 @@ import {
   collection,
   deleteDoc,
   doc,
-  DocumentData,
   onSnapshot,
   setDoc,
 } from "firebase/firestore";
@@ -25,25 +24,14 @@ import { useRouter } from "next/router";
 import { useSetAtom } from "jotai";
 import { isOpenAtom } from "../atoms/modalAtom";
 import { postIdAtom } from "../atoms/postIdAtom";
-
 dayjs.extend(relativeTime);
 
-const Post = ({
-  id,
-  post,
-  isPostPage,
-}: {
-  id: string;
-  post: DocumentData;
-  isPostPage: Boolean;
-}) => {
+const Post = ({ id, post, isPostPage }) => {
   const { data: session } = useSession();
   const router = useRouter();
-
-  const [liked, setLiked] = useState<Boolean>(false);
-  const [likes, setLikes] = useState<DocumentData[]>([]);
+  const [liked, setLiked] = useState(false);
+  const [likes, setLikes] = useState([]);
   const [replies, setReplies] = useState([]);
-
   const setIsOpen = useSetAtom(isOpenAtom);
   const setPostId = useSetAtom(postIdAtom);
 
@@ -114,7 +102,7 @@ const Post = ({
             <EllipsisHorizontalIcon className="h-6 w-6" />
           </div>
         </div>
-        <div className={`${isPostPage && "-ml-[52px]"} w-full`}>
+        <div className={`${isPostPage && "-ml-[50px] mt-1"} w-full`}>
           <p>{post?.text}</p>
           <img
             src={post?.image}
@@ -123,7 +111,7 @@ const Post = ({
           />
           {isPostPage && (
             <>
-              <p className="py-2">
+              <p className="mt-3 text-[#71767b]">
                 {dayjs(post?.timestamp?.toDate()).format(
                   "H:mm A · MMM D, YYYY"
                 )}
@@ -138,9 +126,8 @@ const Post = ({
         </div>
         {/* buttons */}
         <div
-          className={`flex items-center justify-between  mt-2 w-full text-[#71767b] ${
-            isPostPage && "-ml-[12px]"
-          }`}
+          className={`flex items-center justify-between  mt-2 w-full text-[#71767b] ${isPostPage && "-ml-[12px]"
+            }`}
         >
           <div className="flex space-x-1 items-center hover:text-[#0D9BF0]">
             <div
@@ -177,9 +164,8 @@ const Post = ({
           )}
           <div className="flex items-center space-x-1 hover:text-[#f91880]">
             <div
-              className={`icon h-8 w-8 ${
-                liked && "text-[#f91880]"
-              } hover:bg-[#f91880] hover:bg-opacity-20`}
+              className={`icon h-8 w-8 ${liked && "text-[#f91880]"
+                } hover:bg-[#f91880] hover:bg-opacity-20`}
               onClick={handleLike}
             >
               {liked ? (

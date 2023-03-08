@@ -1,14 +1,4 @@
-import { HeroIcon } from "../types/heroicons";
-
-const SidebarLink = ({
-  text,
-  Icon,
-  active,
-}: {
-  text: string;
-  Icon: HeroIcon;
-  active?: boolean;
-}) => {
+const SidebarLink = ({ text, Icon, active }) => {
   return (
     <div className="flex items-center justify-center space-x-2 hoverAnimation">
       <Icon className="w-8 h-8" />

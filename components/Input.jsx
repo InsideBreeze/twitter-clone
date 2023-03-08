@@ -19,17 +19,14 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useSession } from "next-auth/react";
 
 const Input = () => {
-  const filePickerRef = useRef<HTMLInputElement>(null);
-  const [showEmoji, setShowEmoji] = useState<Boolean>(false);
-  const [input, setInput] = useState<string>("");
-  const [selectedFile, setSelectedFile] = useState<string | ArrayBuffer | null>(
-    null
-  );
-  const [loading, setLoading] = useState<Boolean>(false);
-
+  const filePickerRef = useRef(null);
+  const [showEmoji, setShowEmoji] = useState(false);
+  const [input, setInput] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [loading, setLoading] = useState(false);
   const { data: session } = useSession();
 
-  const attachFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const attachFile = (e) => {
     const reader = new FileReader();
     if (e.target.files) {
       reader.readAsDataURL(e.target.files[0]);
@@ -74,14 +71,13 @@ const Input = () => {
   };
   return (
     <div
-      className={`flex p-2 items-start px-5 mt-2 space-x-2 ${
-        loading && "opacity-50"
-      } border-b border-gray-700`}
+      className={`flex p-2 items-start px-5 mt-2 space-x-2 ${loading && "opacity-50"
+        } border-b border-gray-700`}
     >
       <img
         src={session?.user?.image ?? ""}
         alt=""
-        className="w-10 h-10 rounded-full cursor-pointer"
+        className="w-11 h-11 rounded-full cursor-pointer"
       />
       <div className="relative flex flex-col w-full ">
         <textarea
@@ -100,9 +96,7 @@ const Input = () => {
             <div
               className="cursor-pointer hover:bg-opacity-20"
               onClick={() => {
-                if (filePickerRef.current) {
-                  filePickerRef.current.value = "";
-                }
+                filePickerRef.current.value = "";
 
                 setSelectedFile(null);
               }}
@@ -152,7 +146,7 @@ const Input = () => {
                 <Picker
                   data={data}
                   theme="dark"
-                  onEmojiSelect={(e: any) => {
+                  onEmojiSelect={(e) => {
                     setInput(input + e.native);
                     setShowEmoji(false);
                   }}
