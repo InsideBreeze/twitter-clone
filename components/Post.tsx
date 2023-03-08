@@ -86,7 +86,7 @@ const Post = ({
 
   return (
     <div
-      className="flex w-full p-2 space-x-3 border-b border-gray-700 cursor-pointer"
+      className="flex w-full p-2 space-x-3 border-b border-gray-700 cursor-pointer scrollbar-hide"
       onClick={() => router.push(`/${post?.tag}/${id}`)}
     >
       <img

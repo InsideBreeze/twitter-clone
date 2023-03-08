@@ -1,22 +1,33 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { log } from "console";
-import { collection, doc, onSnapshot } from "firebase/firestore";
+import CommentModal from "../../components/CommentModal";
+import {
+  addDoc,
+  collection,
+  doc,
+  onSnapshot,
+  serverTimestamp,
+} from "firebase/firestore";
 import { getProviders, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Login from "../../components/Login";
 import Post from "../../components/Post";
-import PostT from "../../components/PostT";
 import Reply from "../../components/Reply";
 import Sidebar from "../../components/Sidebar";
+import Widget from "../../components/Widget";
 import { db } from "../../firebase";
+import { useAtomValue } from "jotai";
+import { isOpenAtom } from "../../atoms/modalAtom";
 
-const PostPage = ({ providers }) => {
+const PostPage = ({ providers, trendingResults, followResults }) => {
   const [post, setPost] = useState();
   const [replies, setReplies] = useState([]);
   const router = useRouter();
   const { id } = router.query;
   const { data: session } = useSession();
+  const [reply, setReply] = useState("");
+
+  const isOpen = useAtomValue(isOpenAtom);
 
   useEffect(
     () =>
@@ -34,15 +45,23 @@ const PostPage = ({ providers }) => {
     [db, id]
   );
 
-  console.log(replies);
+  const sendReply = async () => {
+    await addDoc(collection(db, "posts", id, "replies"), {
+      comment: reply,
+      commentor: session?.user?.name,
+      tag: session?.user?.tag,
+      timestamp: serverTimestamp(),
+    });
+    setReply("");
+  };
 
   if (!session) {
     return <Login providers={providers} />;
   }
   return (
-    <div className="bg-black min-h-screen border-x border-gray-600 z-100">
+    <div className="bg-black min-h-screen border-x border-gray-600 z-100 flex scrollbar-hide">
       <Sidebar />
-      <div className=" flex flex-col text-white xl:mx-[230px] md:mx-[110px] sm:mx-12 flex-1 max-w-[700px] border-gray-600 border-x h-screen">
+      <div className=" flex flex-col text-white xl:ml-[250px] md:ml-[110px] sm:ml-12 flex-1 min-w-[700px] border-gray-600 border-x h-scree scrollbar-hide">
         <div className="flex p-2 space-x-4 items-center">
           <div
             className="hoverAnimation p-2 cursor-pointer"
@@ -54,7 +73,7 @@ const PostPage = ({ providers }) => {
         </div>
         <Post id={id} post={post} isPostPage={true} />
         {/* input */}
-        <div className="p-2 flex items-center border-b border-gray-600">
+        <div className="p-2 flex items-center border-b border-gray-600 scrollbar-hide">
           <img
             src={session?.user?.image}
             alt=""
@@ -62,12 +81,18 @@ const PostPage = ({ providers }) => {
           />
           <div className="w-full ml-2">
             <textarea
+              value={reply}
+              onChange={(e) => setReply(e.target.value)}
               rows={2}
               className="w-full bg-transparent outline-none placeholder:text-xl scrollbar-hide mt-2"
               placeholder="Tweet your reply"
             />
           </div>
-          <button className="bg-[#1D9BF0] rounded-full ml-3 px-4 py-1">
+          <button
+            className="bg-[#1D9BF0] rounded-full ml-3 px-4 py-1 disabled:opacity-70"
+            disabled={reply.trim() === ""}
+            onClick={sendReply}
+          >
             Reply
           </button>
         </div>
@@ -76,6 +101,10 @@ const PostPage = ({ providers }) => {
           {replies && replies.map((reply) => <Reply reply={reply.data()} />)}
         </div>
       </div>
+      <Widget trendingResults={trendingResults} followResults={followResults} />
+
+      {/* Modal */}
+      {isOpen && <CommentModal />}
     </div>
   );
 };
@@ -83,9 +112,20 @@ const PostPage = ({ providers }) => {
 export const getServerSideProps = async () => {
   const providers = await getProviders();
 
+  // fake data
+  const trendingResults = await fetch("https://www.jsonkeeper.com/b/4CD3").then(
+    (result) => result.json()
+  );
+
+  const followResults = await fetch("https://www.jsonkeeper.com/b/FDU9").then(
+    (result) => result.json()
+  );
+
   return {
     props: {
       providers,
+      trendingResults,
+      followResults,
     },
   };
 };

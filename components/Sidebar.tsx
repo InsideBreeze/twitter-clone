@@ -12,12 +12,14 @@ import {
 } from "@heroicons/react/24/outline";
 import SidebarLink from "./SidebarLink";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const Sidebar = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   return (
     <div className="bg-[re hidden sm:flex flex-col xl:w-[250px] bg-[black] md:pl-10 md:w-[110px] items-start pt-2 fixed xl:pl-4 h-full sm:w-12">
-      <div className="p-3 hoverAnimation">
+      <div className="p-3 hoverAnimation" onClick={() => router.push("/")}>
         <img
           src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
           alt=""
