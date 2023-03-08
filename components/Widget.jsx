@@ -17,8 +17,8 @@ const Widget = ({ trendingResults, followResults }) => {
       <div className="text-white mx-[28px] bg-[#202327] mt-3 rounded-xl">
         <p className="font-semibold text-xl mb-1 p-2">Trends for you</p>
         {trendingResults &&
-          trendingResults.map((trending) => (
-            <Trending key={trending.description} trending={trending} />
+          trendingResults.map((trending, index) => (
+            <Trending key={index} trending={trending} />
           ))}
       </div>
 
