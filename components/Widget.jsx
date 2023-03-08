@@ -17,8 +17,8 @@ const Widget = ({ trendingResults, followResults }) => {
       <div className="text-white mx-[28px] bg-[#202327] mt-3 rounded-xl">
         <p className="font-semibold text-xl mb-1 p-2">Trends for you</p>
         {trendingResults &&
-          trendingResults.map((trending, index) => (
-            <Trending key={index} trending={trending} />
+          trendingResults.map((trending) => (
+            <Trending key={trending.description} trending={trending} />
           ))}
       </div>
 
@@ -27,7 +27,10 @@ const Widget = ({ trendingResults, followResults }) => {
         <p className="font-semibold text-xl mb-1 p-2">Who to follow</p>
         {followResults &&
           followResults.map((follow) => (
-            <div className="flex items-center mb-2 hover:bg-opacity-5 cursor-pointer hover:bg-gray-300 p-2 rounded-md transition-all ease-out duration-100">
+            <div
+              className="flex items-center mb-2 hover:bg-opacity-5 cursor-pointer hover:bg-gray-300 p-2 rounded-md transition-all ease-out duration-100"
+              key={follow.username}
+            >
               <img
                 src={follow.userImg}
                 alt=""
