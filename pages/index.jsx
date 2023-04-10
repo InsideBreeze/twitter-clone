@@ -41,7 +41,7 @@ export const getServerSideProps = async (context) => {
   const providers = await getProviders();
   const session = await getSession(context);
   // fake data
-  const trendingResults = await fetch("https://api.npoint.io/251beccd312711432a79").then(
+  const trendingResults = await fetch("https://api.npoint.io/42b9f70f56ae5969adb3").then(
     (result) => result.json()
   );
 
