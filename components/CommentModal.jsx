@@ -58,7 +58,7 @@ export default function CommentModal() {
       <Transition show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="relative z-10"
+          className="relative z-50"
           onClose={() => setIsOpen(false)}
         >
           <Transition.Child
@@ -89,14 +89,14 @@ export default function CommentModal() {
                     className="hoverAnimation p-1 h-8 w-8 hidden md:block mb-[15px]"
                     onClick={() => setIsOpen(false)}
                   >
-                    <XMarkIcon className="h-6 w-6" />
+                    <XMarkIcon className="w-6 h-6" />
                   </div>
                   <div className="flex items-center justify-between md:hidden">
                     <div
-                      className="hoverAnimation  h-8 w-8"
+                      className="w-8 h-8 hoverAnimation"
                       onClick={() => setIsOpen(false)}
                     >
-                      <ArrowLeftIcon className="h-5 w-5" />
+                      <ArrowLeftIcon className="w-5 h-5" />
                     </div>
                     <button
                       className="bg-[#1D9BF0] text-white px-3 py-1 rounded-full mr-2 disabled:opacity-70"
@@ -107,11 +107,11 @@ export default function CommentModal() {
                     </button>
                   </div>
                   <div className="flex flex-col mt-2">
-                    <div className="flex space-x-3 items-start">
+                    <div className="flex items-start space-x-3">
                       <img
                         src={post?.posterAvatar}
                         alt=""
-                        className="h-9 w-9 rounded-full cursor-pointer"
+                        className="rounded-full cursor-pointer h-9 w-9"
                       />
 
                       <div className="flex flex-col items-start">
@@ -142,7 +142,7 @@ export default function CommentModal() {
                       <img
                         src={session?.user?.image}
                         alt=""
-                        className="h-9 w-9 rounded-full cursor-pointer"
+                        className="rounded-full cursor-pointer h-9 w-9"
                       />
                       <textarea
                         value={reply}
@@ -157,19 +157,19 @@ export default function CommentModal() {
                     <div className="flex ml-12 text-[#1D9BF0] items-center justify-between mb-1">
                       <div className="flex space-x-[10px] items-center">
                         <div>
-                          <PhotoIcon className="h-5 w-5" />
+                          <PhotoIcon className="w-5 h-5" />
                         </div>
                         <div>
-                          <GifIcon className="h-5 w-5" />
+                          <GifIcon className="w-5 h-5" />
                         </div>
                         <div>
-                          <FaceSmileIcon className="h-5 w-5" />
+                          <FaceSmileIcon className="w-5 h-5" />
                         </div>
                         <div>
-                          <CalendarIcon className="h-5 w-5" />
+                          <CalendarIcon className="w-5 h-5" />
                         </div>
                         <div>
-                          <MapPinIcon className="h-5 w-5" />
+                          <MapPinIcon className="w-5 h-5" />
                         </div>
                       </div>
                       <button
