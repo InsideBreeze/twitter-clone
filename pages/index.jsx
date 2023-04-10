@@ -41,11 +41,11 @@ export const getServerSideProps = async (context) => {
   const providers = await getProviders();
   const session = await getSession(context);
   // fake data
-  const trendingResults = await fetch("https://www.jsonkeeper.com/b/4CD3").then(
+  const trendingResults = await fetch("https://api.npoint.io/251beccd312711432a79").then(
     (result) => result.json()
   );
 
-  const followResults = await fetch("https://jsonkeeper.com/b/D4HR").then(
+  const followResults = await fetch("https://api.npoint.io/251beccd312711432a79").then(
     (result) => result.json()
   );
   return {
