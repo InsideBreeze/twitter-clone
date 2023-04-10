@@ -22,9 +22,9 @@ const Feed = () => {
           overflow-y-scroll scrollbar-hide w-[700px]"
     >
       {/* header */}
-      <div className="sticky top-0 z-100 flex items-center p-2 pb-5 justify-between bg-black border-b border-gray-600 ">
+      <div className="sticky top-0 z-50 flex items-center justify-between p-2 pb-5 bg-black border-b border-gray-600">
         <h2 className="font-semibold cursor-pointer md:text-xl">Home</h2>
-        <div className="w-9 h-9 flex items-center justify-center p hoverAnimation">
+        <div className="flex items-center justify-center w-9 h-9 p hoverAnimation">
           <SparklesIcon className="w-5 h-5" />
         </div>
       </div>

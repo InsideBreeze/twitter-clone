@@ -36,7 +36,7 @@ const Sidebar = () => {
         <SidebarLink text="Profile" Icon={UserIcon} />
         <SidebarLink text="More" Icon={EllipsisHorizontalCircleIcon} />
       </div>
-      <div className="">
+      <div className="h-[100%] flex flex-col justify-between">
         <button
           className="hidden xl:flex bg-[#1d9bf0] hover:bg-[#1a8cd8] w-[210px] h-[52px]
         justify-center items-center rounded-full mt-3 text-white text-xl"
@@ -44,7 +44,7 @@ const Sidebar = () => {
           Tweet
         </button>
         {/* user info */}
-        <div className="mt-12 text-white xl:ml-1 hoverAnimation">
+        <div className="text-white xl:ml-1 hoverAnimation">
           <img
             src={session?.user?.image ?? ""}
             alt=""
