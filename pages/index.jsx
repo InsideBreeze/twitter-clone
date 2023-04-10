@@ -45,7 +45,7 @@ export const getServerSideProps = async (context) => {
     (result) => result.json()
   );
 
-  const followResults = await fetch("https://www.jsonkeeper.com/b/FDU9").then(
+  const followResults = await fetch("https://jsonkeeper.com/b/D4HR").then(
     (result) => result.json()
   );
   return {

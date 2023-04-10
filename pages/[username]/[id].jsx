@@ -66,32 +66,32 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
     return <Login providers={providers} />;
   }
   return (
-    <div className="bg-black h-screen border-x border-gray-600 z-100 flex scrollbar-hide">
+    <div className="flex h-screen bg-black border-gray-600 border-x z-100 scrollbar-hide">
       <Sidebar />
       <div className=" flex flex-col text-white h-full xl:ml-[250px] md:ml-[110px] sm:ml-14 flex-1 w-[700px] border-gray-600 border-x h-screen overflow-y-scroll scrollbar-hide">
-        <div className="flex p-2 space-x-4 items-center">
+        <div className="flex items-center p-2 space-x-4">
           <div
-            className="hoverAnimation p-2 cursor-pointer"
+            className="p-2 cursor-pointer hoverAnimation"
             onClick={() => router.push("/")}
           >
-            <ArrowLeftIcon className="h-5 w-5" />
+            <ArrowLeftIcon className="w-5 h-5" />
           </div>
-          <p className="font-semibold text-xl">Tweet</p>
+          <p className="text-xl font-semibold">Tweet</p>
         </div>
         <Post id={id} post={post} isPostPage={true} />
         {/* input */}
-        <div className="p-2 flex items-center border-b border-gray-600">
+        <div className="flex items-center p-2 border-b border-gray-600">
           <img
             src={session?.user?.image}
             alt=""
-            className="h-11 w-11 rounded-full"
+            className="rounded-full h-11 w-11"
           />
           <div className="w-full ml-2">
             <textarea
               value={reply}
               onChange={(e) => setReply(e.target.value)}
               rows={2}
-              className="w-full bg-transparent outline-none placeholder:text-xl scrollbar-hide mt-2"
+              className="w-full bg-transparent outline-none placeholder:text-xl scrollbar-hide mt-2 min-h-[15px]"
               placeholder="Tweet your reply"
             />
           </div>
