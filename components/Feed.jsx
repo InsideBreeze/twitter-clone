@@ -17,10 +17,7 @@ const Feed = () => {
     [db]
   );
   return (
-    <div
-      className="text-white xl:ml-[250px] md:ml-[110px] sm:ml-14 border-gray-600 sm:border-l md:border-r flex-1
-          overflow-y-scroll scrollbar-hide w-[700px]"
-    >
+    <>
       {/* header */}
       <div className="sticky top-0 z-20 flex items-center justify-between p-2 pb-5 bg-black border-b border-gray-600">
         <h2 className="font-semibold cursor-pointer md:text-xl">Home</h2>
@@ -35,7 +32,8 @@ const Feed = () => {
         posts.map((post) => (
           <Post key={post.id} id={post.id} post={post.data()} />
         ))}
-    </div>
+
+    </>
   );
 };
 

@@ -19,14 +19,17 @@ const Layout = ({ trendingResults, followResults, children }) => {
         {/* sidebar */}
         <Sidebar />
 
-        {children}
+        <div className="text-white xl:ml-[250px] md:ml-[110px] sm:ml-14 border-gray-600 sm:border-l
+        md:border-r flex-1 overflow-y-scroll scrollbar-hide w-[700px]">
+          {children}
+        </div>
         {/* widget */}
         <Widget
           trendingResults={trendingResults}
           followResults={followResults}
         />
 
-      {isOpen && <CommentModal />}
+        {isOpen && <CommentModal />}
       </main>
     </div>
   );
