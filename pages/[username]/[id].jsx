@@ -27,7 +27,6 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
   const { data: session } = useSession();
   const [reply, setReply] = useState("");
 
-  const isOpen = useAtomValue(isOpenAtom);
   const q = query(
     collection(db, "posts", id, "replies"),
     orderBy("timestamp", "desc")
@@ -75,7 +74,10 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
           </div>
           <p className="text-xl font-semibold">Tweet</p>
         </div>
+        {
+          post && 
         <Post id={id} post={post} isPostPage={true} />
+        }
         {/* input */}
         <div className="flex items-center p-2 border-b border-gray-600">
           <img
@@ -102,10 +104,9 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
         </div>
 
         <div>
-          {replies && replies.map((reply) => <Reply reply={reply.data()} />)}
+          {replies && replies.map((reply) => <Reply key={reply.id} reply={reply.data()} />)}
         </div>
       </div>
-      {isOpen && <CommentModal />}
     </div>
   );
 };

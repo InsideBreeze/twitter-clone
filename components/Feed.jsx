@@ -31,9 +31,10 @@ const Feed = () => {
       {/* input */}
       <Input />
       {/* posts */}
-      {posts?.map((post) => (
-        <Post key={post.id} id={post.id} post={post.data()} />
-      ))}
+      {posts &&
+        posts.map((post) => (
+          <Post key={post.id} id={post.id} post={post.data()} />
+        ))}
     </div>
   );
 };

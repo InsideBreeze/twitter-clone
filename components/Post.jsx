@@ -78,24 +78,24 @@ const Post = ({ id, post, isPostPage }) => {
       onClick={() => router.push(`/${post?.tag}/${id}`)}
     >
       <img
-        src={post?.posterAvatar}
+        src={post.posterAvatar}
         alt=""
         className="rounded-full h-10 w-10 hover:opacity-90"
       />
       <div className="flex flex-col items-start w-full">
         <div className="flex items-center w-full">
           <div className={`${!isPostPage && "flex"}`}>
-            <span className="hover:underline mr-1">{post?.posterName}</span>{" "}
+            <span className="hover:underline mr-1">{post.posterName}</span>{" "}
             <div className="ml-">
               <span className={`text-[#71767b] ${isPostPage && "block"}`}>
-                @{post?.tag}
+                @{post.tag}
                 {!isPostPage && " · "}
               </span>
             </div>
           </div>
           {!isPostPage && (
             <span className="ml-1 text-[#71767b]">
-              {dayjs(post?.timestamp?.toDate()).toNow(true)}
+              {dayjs(post.timestamp?.toDate()).toNow(true)}
             </span>
           )}
           <div className="hoverAnimation p-0 ml-auto h-8 w-8 text-[#71767b] hover:text-[#0D9BF0] hover:bg-[[#0D9BF0] hover:bg-opacity-20">
@@ -103,16 +103,18 @@ const Post = ({ id, post, isPostPage }) => {
           </div>
         </div>
         <div className={`${isPostPage && "-ml-[50px] mt-1"} w-full`}>
-          <p>{post?.text}</p>
-          <img
-            src={post?.image}
-            alt=""
-            className="max-h-[350px] object-cover rounded-xl"
-          />
+          <p>{post.text}</p>
+          {post.image && (
+            <img
+              src={post.image}
+              alt=""
+              className="max-h-[350px] object-cover rounded-xl"
+            />
+          )}
           {isPostPage && (
             <>
               <p className="mt-3 text-[#71767b]">
-                {dayjs(post?.timestamp?.toDate()).format(
+                {dayjs(post.timestamp?.toDate()).format(
                   "H:mm A · MMM D, YYYY"
                 )}
               </p>
@@ -126,8 +128,9 @@ const Post = ({ id, post, isPostPage }) => {
         </div>
         {/* buttons */}
         <div
-          className={`flex items-center justify-between  mt-2 w-full text-[#71767b] ${isPostPage && "-ml-[12px]"
-            }`}
+          className={`flex items-center justify-between  mt-2 w-full text-[#71767b] ${
+            isPostPage && "-ml-[12px]"
+          }`}
         >
           <div className="flex space-x-1 items-center hover:text-[#0D9BF0]">
             <div
@@ -147,7 +150,7 @@ const Post = ({ id, post, isPostPage }) => {
             </span>
           </div>
 
-          {session?.user?.uid === post?.id ? (
+          {session?.user?.uid === post.id ? (
             <div
               className="icon hover:text-[red] h-8 w-8 hover:bg-[red] hover:bg-opacity-20"
               onClick={async (e) => {
@@ -164,8 +167,9 @@ const Post = ({ id, post, isPostPage }) => {
           )}
           <div className="flex items-center space-x-1 hover:text-[#f91880]">
             <div
-              className={`icon h-8 w-8 ${liked && "text-[#f91880]"
-                } hover:bg-[#f91880] hover:bg-opacity-20`}
+              className={`icon h-8 w-8 ${
+                liked && "text-[#f91880]"
+              } hover:bg-[#f91880] hover:bg-opacity-20`}
               onClick={handleLike}
             >
               {liked ? (
