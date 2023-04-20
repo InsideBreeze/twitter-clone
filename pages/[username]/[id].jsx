@@ -1,5 +1,4 @@
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import CommentModal from "../../components/CommentModal";
 import {
   addDoc,
   collection,
@@ -9,17 +8,16 @@ import {
   query,
   serverTimestamp,
 } from "firebase/firestore";
+import { useAtomValue } from "jotai";
 import { getProviders, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { isOpenAtom } from "../../atoms/modalAtom";
+import CommentModal from "../../components/CommentModal";
 import Login from "../../components/Login";
 import Post from "../../components/Post";
 import Reply from "../../components/Reply";
-import Sidebar from "../../components/Sidebar";
-import Widget from "../../components/Widget";
 import { db } from "../../firebase";
-import { useAtomValue } from "jotai";
-import { isOpenAtom } from "../../atoms/modalAtom";
 
 const PostPage = ({ providers, trendingResults, followResults }) => {
   const [post, setPost] = useState();
@@ -67,7 +65,6 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
   }
   return (
     <div className="flex h-screen bg-black border-gray-600 border-x z-100 scrollbar-hide">
-      <Sidebar />
       <div className=" flex flex-col text-white h-full xl:ml-[250px] md:ml-[110px] sm:ml-14 flex-1 w-[700px] border-gray-600 border-x h-screen overflow-y-scroll scrollbar-hide">
         <div className="flex items-center p-2 space-x-4">
           <div
@@ -108,9 +105,6 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
           {replies && replies.map((reply) => <Reply reply={reply.data()} />)}
         </div>
       </div>
-      <Widget trendingResults={trendingResults} followResults={followResults} />
-
-      {/* Modal */}
       {isOpen && <CommentModal />}
     </div>
   );
@@ -119,12 +113,12 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
 export const getServerSideProps = async () => {
   const providers = await getProviders();
 
-  // fake data
-  const trendingResults = await fetch("https://www.jsonkeeper.com/b/4CD3").then(
+    // fake data
+  const trendingResults = await fetch("https://api.npoint.io/251beccd312711432a79").then(
     (result) => result.json()
   );
 
-  const followResults = await fetch("https://www.jsonkeeper.com/b/FDU9").then(
+  const followResults = await fetch("https://api.npoint.io/42b9f70f56ae5969adb3").then(
     (result) => result.json()
   );
 

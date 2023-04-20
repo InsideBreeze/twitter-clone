@@ -1,12 +1,8 @@
-import Head from "next/head";
-import Feed from "../components/Feed";
-import Sidebar from "../components/Sidebar";
-import { getProviders, getSession, useSession } from "next-auth/react";
-import Login from "../components/Login";
-import CommentModal from "../components/CommentModal";
 import { useAtomValue } from "jotai";
+import { getProviders, getSession, useSession } from "next-auth/react";
 import { isOpenAtom } from "../atoms/modalAtom";
-import Widget from "../components/Widget";
+import Feed from "../components/Feed";
+import Login from "../components/Login";
 const Home = ({ providers, trendingResults, followResults }) => {
   const { data: session } = useSession();
   const isOpen = useAtomValue(isOpenAtom);
@@ -14,28 +10,9 @@ const Home = ({ providers, trendingResults, followResults }) => {
     return <Login providers={providers} />;
   }
   return (
-    <div className="bg-[black]">
-      <Head>
-        <title>Twitter clone</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex h-screen bg-[black] min-h-screen">
-        {/* Sidebar */}
-        <Sidebar />
-        {/* Feed */}
-        <Feed />
-        {/* Modal */}
-        {isOpen && <CommentModal />}
-
-        {/* Widget */}
-        <Widget
-          trendingResults={trendingResults}
-          followResults={followResults}
-        />
-      </main>
-    </div>
-  );
-};
+    <Feed />
+  )
+ };
 
 export const getServerSideProps = async (context) => {
   const providers = await getProviders();

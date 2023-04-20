@@ -1,3 +1,4 @@
+import data from '@emoji-mart/data/sets/14/twitter.json';
 import {
   CalendarIcon,
   ChartBarIcon,
@@ -5,18 +6,17 @@ import {
   PhotoIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import React, { Suspense, lazy, useReducer, useRef, useState } from "react";
 import {
   addDoc,
   collection,
   serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
-import { db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useSession } from "next-auth/react";
-import data from '@emoji-mart/data/sets/14/twitter.json'
 import dynamic from "next/dynamic";
+import React, { Suspense, useReducer, useRef, useState } from "react";
+import { db, storage } from "../firebase";
 
 const Picker = dynamic(
   () => import(/*webpackChunkName: "Emoji-mart"*/'@emoji-mart/react'),
