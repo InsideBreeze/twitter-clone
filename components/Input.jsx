@@ -5,9 +5,7 @@ import {
   PhotoIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
-import React, { useRef, useState } from "react";
-import data from "@emoji-mart/data/sets/14/twitter.json";
-import Picker from "@emoji-mart/react";
+import React, { Suspense, lazy, useReducer, useRef, useState } from "react";
 import {
   addDoc,
   collection,
@@ -17,10 +15,17 @@ import {
 import { db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { useSession } from "next-auth/react";
+import data from '@emoji-mart/data/sets/14/twitter.json'
+import dynamic from "next/dynamic";
+
+const Picker = dynamic(
+  () => import(/*webpackChunkName: "Emoji-mart"*/'@emoji-mart/react'),
+)
 
 const Input = () => {
   const filePickerRef = useRef(null);
-  const [showEmoji, setShowEmoji] = useState(false);
+//  const [showEmoji, setShowEmoji] = useState(false);
+  const [showEmoji, toggleEmoji] = useReducer(open => !open, false)
   const [input, setInput] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -70,6 +75,7 @@ const Input = () => {
     setSelectedFile(null);
   };
   return (
+    <Suspense fallback={<p>loading...</p>}>
     <div
       className={`flex p-2 items-start px-5 mt-2 space-x-2 ${loading && "opacity-50"
         } border-b border-gray-700`}
@@ -133,7 +139,7 @@ const Input = () => {
               </div>
               <div
                 className="icon h-9 w-9"
-                onClick={() => setShowEmoji(!showEmoji)}
+                onClick={toggleEmoji}
               >
                 <FaceSmileIcon className="w-6 h-6" />
               </div>
@@ -148,7 +154,7 @@ const Input = () => {
                   theme="dark"
                   onEmojiSelect={(e) => {
                     setInput(input + e.native);
-                    setShowEmoji(false);
+                    toggleEmoji();
                   }}
                   set="twitter"
                 />
@@ -165,6 +171,8 @@ const Input = () => {
         )}
       </div>
     </div>
+
+    </Suspense>
   );
 };
 
