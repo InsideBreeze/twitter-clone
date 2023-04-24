@@ -5,9 +5,18 @@ import Head from "next/head";
 import { useAtomValue } from "jotai";
 import { isOpenAtom } from "../atoms/modalAtom";
 import CommentModal from "./CommentModal";
+import { useSession } from "next-auth/react";
+import Login from "./Login";
 
-const Layout = ({ trendingResults, followResults, children }) => {
+const Layout = ({ trendingResults, followResults, children, providers }) => {
   const isOpen = useAtomValue(isOpenAtom);
+
+  const { data: session } = useSession()
+
+  if (!session) {
+    return <Login providers={providers} />
+  }
+
   return (
     <div className="bg-[black] h-screen min-h-screen">
       <Head>

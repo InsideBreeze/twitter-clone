@@ -1,7 +1,8 @@
 import { getProviders, getSession, useSession } from "next-auth/react";
 import Feed from "../components/Feed";
 import Login from "../components/Login";
-const Home = ({ providers, trendingResults, followResults }) => {
+
+const Home = ({ providers }) => {
   const { data: session } = useSession();
   return !session ? <Login providers={providers} /> : <Feed />;
 };
