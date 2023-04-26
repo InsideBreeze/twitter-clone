@@ -3,6 +3,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   onSnapshot,
   orderBy,
   query,
@@ -13,7 +14,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Post from '../../components/Feed/Post';
-import Reply from '../../components/Widget/Reply';
+import Reply from '../../components/Reply';
 import { db } from '../../firebase';
 
 const PostPage = ({ providers, trendingResults, followResults }) => {
@@ -28,15 +29,11 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
     collection(db, 'posts', id, 'replies'),
     orderBy('timestamp', 'desc')
   );
-
-  useEffect(
-    () =>
-      onSnapshot(doc(db, 'posts', id), (snapshot) => {
-        setPost(snapshot.data());
-      }),
-    [db, id]
-  );
-
+ React.useEffect(() => {
+    getDoc(doc(db, `posts/${id}`)).then((snapshot) => {
+      setPost(snapshot.data());
+    });
+  }, []);
   useEffect(
     () =>
       onSnapshot(q, (snapshot) => {

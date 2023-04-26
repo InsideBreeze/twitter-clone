@@ -125,6 +125,8 @@ const Post = ({ post, isPostPage, id }) => {
             <img
               src={post.image}
               alt="post image"
+              height={350}
+              width={350}
               className="max-h-[350px] max-w-[350px] rounded-sm mt-1 mb-2"
             />
           )}
