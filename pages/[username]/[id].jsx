@@ -1,4 +1,4 @@
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import {
   addDoc,
   collection,
@@ -7,17 +7,14 @@ import {
   orderBy,
   query,
   serverTimestamp,
-} from "firebase/firestore";
-import { useAtomValue } from "jotai";
-import { getProviders, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { isOpenAtom } from "../../atoms/modalAtom";
-import CommentModal from "../../components/CommentModal";
-import Login from "../../components/Login";
-import Post from "../../components/Post";
-import Reply from "../../components/Reply";
-import { db } from "../../firebase";
+} from 'firebase/firestore';
+import { getProviders, useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import Post from '../../components/Feed/Post';
+import Reply from '../../components/Widget/Reply';
+import { db } from '../../firebase';
 
 const PostPage = ({ providers, trendingResults, followResults }) => {
   const [post, setPost] = useState();
@@ -25,16 +22,16 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
   const router = useRouter();
   const { id } = router.query;
   const { data: session } = useSession();
-  const [reply, setReply] = useState("");
+  const [reply, setReply] = useState('');
 
   const q = query(
-    collection(db, "posts", id, "replies"),
-    orderBy("timestamp", "desc")
+    collection(db, 'posts', id, 'replies'),
+    orderBy('timestamp', 'desc')
   );
 
   useEffect(
     () =>
-      onSnapshot(doc(db, "posts", id), (snapshot) => {
+      onSnapshot(doc(db, 'posts', id), (snapshot) => {
         setPost(snapshot.data());
       }),
     [db, id]
@@ -49,31 +46,29 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
   );
 
   const sendReply = async () => {
-    await addDoc(collection(db, "posts", id, "replies"), {
+    await addDoc(collection(db, 'posts', id, 'replies'), {
       comment: reply,
       commentor: session?.user?.name,
       tag: session?.user?.tag,
       userImg: session?.user.image,
       timestamp: serverTimestamp(),
     });
-    setReply("");
+    setReply('');
   };
 
-  if (!session) {
-    return <Login providers={providers} />;
-  }
   return (
     <>
       <div className="flex items-center p-2 space-x-4">
-        <div
-          className="p-2 cursor-pointer hoverAnimation"
-          onClick={() => router.push("/")}
+        <Link
+          className="p-2 cursor-pointer hover:bg-gray-300 rounded-full hover:bg-opacity-20"
+          href="/"
         >
           <ArrowLeftIcon className="w-5 h-5" />
-        </div>
+        </Link>
         <p className="text-xl font-semibold">Tweet</p>
       </div>
-      {post && <Post id={id} post={post} isPostPage={true} />}
+      {post && 
+          <Post id={id} post={post} isPostPage />}
       {/* input */}
       <div className="flex items-center p-2 border-b border-gray-600">
         <img
@@ -92,7 +87,7 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
         </div>
         <button
           className="bg-[#1D9BF0] rounded-full ml-3 px-4 py-1 disabled:opacity-70"
-          disabled={reply.trim() === ""}
+          disabled={reply.trim() === ''}
           onClick={sendReply}
         >
           Reply
@@ -112,11 +107,11 @@ export const getServerSideProps = async () => {
 
   // fake data
   const trendingResults = await fetch(
-    "https://api.npoint.io/251beccd312711432a79"
+    'https://api.npoint.io/251beccd312711432a79'
   ).then((result) => result.json());
 
   const followResults = await fetch(
-    "https://api.npoint.io/42b9f70f56ae5969adb3"
+    'https://api.npoint.io/42b9f70f56ae5969adb3'
   ).then((result) => result.json());
 
   return {
