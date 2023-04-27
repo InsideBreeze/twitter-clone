@@ -1,6 +1,3 @@
-import React from "react";
-import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import {
   ChartBarIcon,
   ChatBubbleLeftIcon,
@@ -8,6 +5,9 @@ import {
   HeartIcon,
   ShareIcon,
 } from "@heroicons/react/24/outline";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import React from "react";
 dayjs.extend(relativeTime);
 
 const Reply = ({ reply }) => {

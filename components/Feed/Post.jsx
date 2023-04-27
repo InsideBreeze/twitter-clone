@@ -10,85 +10,65 @@ import {
 import { HeartIcon as FilledHeartIcon } from '@heroicons/react/24/solid';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  onSnapshot,
-  setDoc,
-} from 'firebase/firestore';
+import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { useSetAtom } from 'jotai';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { isOpenAtom } from '../../atoms/modalAtom';
 import { postIdAtom } from '../../atoms/postIdAtom';
 import postState from '../../atoms/postState';
 import { db } from '../../firebase';
 dayjs.extend(relativeTime);
-const Post = ({ post, isPostPage, id }) => {
+const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
   const { data: session } = useSession();
 
-  const [likes, setLikes] = React.useState([]);
-  const [liked, setLiked] = React.useState(false);
-  const [replies, setReplies] = React.useState([]);
   const setPosts = useSetAtom(postState);
   const setIsOpen = useSetAtom(isOpenAtom);
   const setPostId = useSetAtom(postIdAtom);
 
   const router = useRouter();
 
-  useEffect(() => {
-    getDocs(collection(db, `posts/${id}/likes`)).then((querySnapshot) => {
-      setLikes(querySnapshot.docs.map((doc) => doc.data()));
-    });
-  }, []);
+  const liked = post.likes.findIndex((id) => id === session?.user?.uid) !== -1;
 
-  useEffect(() => {
-    if (session?.user.uid) {
-      setLiked(
-        likes.findIndex((like) => like.id === session?.user?.uid) !== -1
-      );
-    }
-  }, [likes]);
-
-  // fetch replies
-  //
-  const fetchReplies = async () => {};
-
-  /*
-	useEffect(() => {
-		getDocs(collection(db, `posts/${id}/replies`))
-		.then(snapshot => {
-			setReplies(snapshot)
-		})
-	})
-	*/
-  useEffect(
-    () =>
-      onSnapshot(collection(db, `posts/${id}/replies`), (snapshot) => {
-        setReplies(snapshot.docs);
-      }),
-    [db, id]
-  );
   const handleLike = async (e) => {
     e.stopPropagation();
     if (liked) {
-      await deleteDoc(doc(db, 'posts', id, 'likes', session?.user?.uid));
-      setLikes((prev) => prev.filter((like) => like.id !== session?.user?.uid));
-      setLiked(false);
-    } else {
-      // use setDoc to specify a id
-      await setDoc(doc(db, 'posts', id, 'likes', session?.user?.uid), {
-        id: session?.user?.uid,
+      console.log(
+        'newLikes',
+        post.likes.filter((id) => id !== session?.user?.uid)
+      );
+      const newLikes = post.likes.filter((id) => id !== session?.user?.uid);
+      await updateDoc(doc(db, `posts/${id}`), {
+        likes: newLikes,
       });
-      setLikes((prev) => [...prev, { id: session?.user.uid }]);
-      setLiked(true);
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === id
+            ? {
+                ...p,
+                likes: newLikes,
+              }
+            : p
+        )
+      );
+    } else {
+      await updateDoc(doc(db, `posts/${id}`), {
+        likes: [...post.likes, session?.user?.uid],
+      });
+      setPosts((prev) =>
+        prev.map((p) =>
+          p.id === id
+            ? {
+                ...p,
+                likes: p.likes.concat(session?.user?.uid),
+              }
+            : p
+        )
+      );
     }
   };
 
-  // console.log(likes, 'likes')
   return (
     <div
       className="p-3 cursor-pointer border-b border-gray-600 pb-1"
@@ -98,7 +78,7 @@ const Post = ({ post, isPostPage, id }) => {
         {/* header */}
         <div className="flex  items-start space-x-2">
           <img
-            src={session.user.image}
+            src={post.posterAvatar}
             className="rounded-full h-10 w-10 inline"
           />
           <span className="flex items-center space-x-1">
@@ -148,8 +128,8 @@ const Post = ({ post, isPostPage, id }) => {
           >
             <ChatBubbleLeftIcon className="h-5" />
           </div>
-          <span className={`${replies.length === 0 && 'opacity-0'}`}>
-            {replies.length}
+          <span className={`${repliesCount === 0 && 'opacity-0'}`}>
+            {repliesCount}
           </span>
         </div>
 
@@ -158,6 +138,7 @@ const Post = ({ post, isPostPage, id }) => {
             <TrashIcon
               className="h-5"
               onClick={async (e) => {
+                console.log('delete?');
                 e.stopPropagation();
                 await deleteDoc(doc(db, 'posts', post.id));
                 setPosts((prev) => prev.filter((e) => e.id !== post.id));
@@ -165,7 +146,7 @@ const Post = ({ post, isPostPage, id }) => {
             />
           </div>
         ) : (
-          <div>
+          <div className="flex items-center justify-center p-[7px] hover:bg-[#0D9BF0] hover:text-[#0D9BF0] hover:bg-opacity-20 rounded-full">
             <ArrowsRightLeftIcon className="h-5" />
           </div>
         )}
@@ -182,8 +163,8 @@ const Post = ({ post, isPostPage, id }) => {
             )}
           </div>
 
-          <span className={`${likes.length === 0 && 'opacity-0'}`}>
-            {likes.length}
+          <span className={`${post.likes.length === 0 && 'opacity-0'}`}>
+            {post.likes.length}
           </span>
         </div>
 

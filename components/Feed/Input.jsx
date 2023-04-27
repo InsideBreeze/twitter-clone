@@ -11,7 +11,7 @@ import {
   doc,
   getDoc,
   serverTimestamp,
-  writeBatch
+  writeBatch,
 } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { useSetAtom } from 'jotai';
@@ -62,6 +62,8 @@ const Input = () => {
         text,
         tag: session?.user.tag,
         timestamp: serverTimestamp(),
+        likes: [],
+        repliesCount: 0,
       });
 
       if (selectedFile) {

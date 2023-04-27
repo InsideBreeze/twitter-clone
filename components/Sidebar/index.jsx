@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BellIcon,
   BookmarkIcon,
@@ -10,9 +9,10 @@ import {
   InboxIcon,
   UserIcon,
 } from "@heroicons/react/24/outline";
-import SidebarLink from "./SidebarLink";
-import { useSession, signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import React from "react";
+import SidebarLink from "./SidebarLink";
 
 const Sidebar = () => {
   const { data: session } = useSession();

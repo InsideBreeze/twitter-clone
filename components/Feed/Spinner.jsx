@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PostSkeleton = () => {
+const PostSpin = () => {
   return (
     <div role="status">
       <svg
@@ -23,4 +23,4 @@ const PostSkeleton = () => {
   );
 };
 
-export default PostSkeleton;
+export default PostSpin;

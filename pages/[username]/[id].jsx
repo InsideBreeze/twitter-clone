@@ -2,8 +2,6 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 import {
   addDoc,
   collection,
-  doc,
-  getDoc,
   onSnapshot,
   orderBy,
   query,
@@ -14,26 +12,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import Post from '../../components/Feed/Post';
+import PostSpin from '../../components/Feed/Spinner';
 import Reply from '../../components/Reply';
 import { db } from '../../firebase';
+import usePost from '../../hooks/usePost';
 
-const PostPage = ({ providers, trendingResults, followResults }) => {
-  const [post, setPost] = useState();
+const PostPage = () => {
   const [replies, setReplies] = useState([]);
   const router = useRouter();
   const { id } = router.query;
   const { data: session } = useSession();
   const [reply, setReply] = useState('');
 
+  const { post, updateRepliesCount } = usePost(id);
   const q = query(
     collection(db, 'posts', id, 'replies'),
     orderBy('timestamp', 'desc')
   );
- React.useEffect(() => {
-    getDoc(doc(db, `posts/${id}`)).then((snapshot) => {
-      setPost(snapshot.data());
-    });
-  }, []);
+
   useEffect(
     () =>
       onSnapshot(q, (snapshot) => {
@@ -50,8 +46,14 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
       userImg: session?.user.image,
       timestamp: serverTimestamp(),
     });
+
     setReply('');
+    await updateRepliesCount();
   };
+
+  if (!post) {
+    return <PostSpin />;
+  }
 
   return (
     <>
@@ -64,8 +66,9 @@ const PostPage = ({ providers, trendingResults, followResults }) => {
         </Link>
         <p className="text-xl font-semibold">Tweet</p>
       </div>
-      {post && 
-          <Post id={id} post={post} isPostPage />}
+      {post && (
+        <Post id={id} post={post} isPostPage repliesCount={replies.length} />
+      )}
       {/* input */}
       <div className="flex items-center p-2 border-b border-gray-600">
         <img

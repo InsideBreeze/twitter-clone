@@ -3,8 +3,6 @@ import Head from "next/head";
 
 // how to make this component ssr?
 const Login = ({ providers }) => {
-  // https://devdojo.com/tailwindcss/buttons#_
-  //
   return (
     <>
       {
