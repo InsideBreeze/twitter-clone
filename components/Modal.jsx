@@ -145,7 +145,7 @@ const DialogDemo = () => {
           </div>
           <Dialog.Close asChild>
             <div
-              className="justify-between  p-0 absolute sm:top-[10px] sm:left-[10px] -top-14 -left-5 inline-flex "
+              className="justify-between  sm:p-0 absolute sm:top-[10px] sm:left-[10px] -top-14 -left-5 inline-flex w-full pl-3 pt-1"
               aria-label="Close"
             >
               <div
@@ -153,10 +153,10 @@ const DialogDemo = () => {
                 onClick={() => setIsOpen(false)}
               >
                 <XMarkIcon className="h-6 hidden sm:inline" />
-                <ArrowLeftIcon className="h-6 sm:hidden ml-1" />
+                <ArrowLeftIcon className="h-5 sm:hidden ml-1" />
               </div>
               <button
-                className="sm:hidden px-3 py-1 bg-twitterBlue rounded-full disabled:opacity-50"
+                className="sm:hidden px-2 bg-twitterBlue rounded-full disabled:opacity-80 -mr-8"
                 disabled={text.trim().length === 0}
                 onClick={sendReply}
               >

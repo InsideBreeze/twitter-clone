@@ -138,10 +138,9 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
             <TrashIcon
               className="h-5"
               onClick={async (e) => {
-                console.log('delete?');
                 e.stopPropagation();
-                await deleteDoc(doc(db, 'posts', post.id));
-                setPosts((prev) => prev.filter((e) => e.id !== post.id));
+                await deleteDoc(doc(db, 'posts', id));
+                setPosts((prev) => prev.filter((e) => e.id !== id));
               }}
             />
           </div>
