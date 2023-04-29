@@ -71,7 +71,7 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
 
   return (
     <div
-      className="p-3 cursor-pointer border-b border-gray-600 pb-1"
+      className="p-3 cursor-pointer border-b dark:border-gray-600 pb-1"
       onClick={() => router.push(`/${post.tag}/${id}`)}
     >
       <div className="flex justify-between items-start">
@@ -81,7 +81,7 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
             src={post.posterAvatar}
             className="rounded-full h-10 w-10 inline"
           />
-          <span className="flex items-center space-x-1">
+          <span className="flex items-center space-x-1 text-black dark:text-white">
             <span className="hover:underline">{post.posterName}</span>
             <span className={`${isPostPage && 'hidden'} text-[#71767b]`}>
               @{post.tag}
@@ -90,7 +90,7 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
             </span>
           </span>
         </div>
-        <div className="p-[2px] hover:bg-gray-600 flex items-center jusify-center rounded-full hover:bg-opacity-70">
+        <div className="p-[2px] hover:bg-gray-600 flex items-center jusify-center rounded-full dark:hover:bg-opacity-70 hover:bg-opacity-10 text-black dark:text-white">
           <EllipsisHorizontalIcon className="h-6" />
         </div>
       </div>
@@ -100,7 +100,7 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
       </div>
       <div className={`${isPostPage ? 'ml-0' : 'ml-12'}`}>
         <div className={`${!isPostPage && '-mt-4'}`}>
-          <p>{post.text}</p>
+          <p className="text-black dark:text-white">{post.text}</p>
           {post.image && (
             <img
               src={post.image}

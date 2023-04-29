@@ -96,7 +96,7 @@ const Input = () => {
       <div
         className={` ${
           loading && 'opacity-60'
-        } flex space-x-2 p-4 border-b border-gray-600 `}
+        } flex space-x-2 p-4 border-b dark:border-gray-600 `}
       >
         <img
           src={session?.user.image}
@@ -106,9 +106,9 @@ const Input = () => {
         <div className="w-full">
           <textarea
             value={text}
-            placeholder="What's happening"
-            className="w-full bg-transparent 
-          outline-none pl-2 text-lg min-h-[50px] max-h-[50px] scrollbar-hide "
+            placeholder="What's happening?"
+            className="w-full bg-transparent placeholder:text-gray-600 dark:placeholder:text-gray-400 text-black dark:text-white
+          outline-none pl-2 text-lg min-h-[50px] max-h-[50px] scrollbar-hide"
             disabled={loading}
             onChange={(e) => setText(e.target.value)}
           />
@@ -129,7 +129,7 @@ const Input = () => {
                 </div>
               )}
 
-              <div className="flex justify-between px-4 border-t border-gray-600 pt-2 relative">
+              <div className="flex justify-between px-4 border-t dark:border-gray-600 pt-2 relative">
                 <div className="flex items-center text-twitterBlue">
                   <span
                     className="icon p-[6px]"

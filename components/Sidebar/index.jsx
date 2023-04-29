@@ -8,25 +8,26 @@ import {
   HomeIcon,
   InboxIcon,
   UserIcon,
-} from "@heroicons/react/24/outline";
-import { signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/router";
-import React from "react";
-import SidebarLink from "./SidebarLink";
+} from '@heroicons/react/24/outline';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React from 'react';
+import SidebarLink from './SidebarLink';
 
 const Sidebar = () => {
   const { data: session } = useSession();
   const router = useRouter();
   return (
-    <div className="bg-[re hidden sm:flex flex-col xl:w-[250px] bg-[black] md:pl-10 md:w-[110px] items-start pt-2 fixed xl:pl-4 h-full sm:w-14">
-      <div className="p-3 hoverAnimation" onClick={() => router.push("/")}>
+    <div className="hidden sm:flex flex-col xl:w-[250px]  md:pl-10 md:w-[110px] items-start pt-2 fixed xl:pl-4 h-full sm:w-14">
+      <div className="p-3 hoverAnimation" onClick={() => router.push('/')}>
         <img
-          src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
+          //src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
+          src="/images/twitter-logo.svg"
           alt=""
           className="w-8 h-8"
         />
       </div>
-      <div className="text-[#d9d9d9]  flex flex-col mt-4 items-start justify-center">
+      <div className="dark:text-[#d9d9d9]  flex flex-col mt-4 items-start justify-center">
         <SidebarLink text="Home" Icon={HomeIcon} active />
         <SidebarLink text="Explore" Icon={HashtagIcon} />
         <SidebarLink text="Notificatons" Icon={BellIcon} />
@@ -44,16 +45,16 @@ const Sidebar = () => {
           Tweet
         </button>
         {/* user info */}
-        <div className="text-white xl:ml-1 hoverAnimation">
+        <div className="dark:text-white xl:ml-1 hoverAnimation">
           <img
-            src={session?.user?.image ?? ""}
+            src={session?.user?.image ?? ''}
             alt=""
             className="w-10 h-10 rounded-full"
             onClick={() => signOut()}
           />
           <div className="hidden ml-3 xl:block">
             <h4>{session?.user?.name}</h4>
-            <p className="text-sm text-gray-400">@{session?.user?.tag}</p>
+            <p className="text-sm dark:text-gray-400">@{session?.user?.tag}</p>
           </div>
           <EllipsisHorizontalIcon className="hidden w-5 h-5 ml-auto xl:inline" />
         </div>

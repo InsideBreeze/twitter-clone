@@ -10,11 +10,7 @@ import {
 import * as Dialog from '@radix-ui/react-dialog';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import {
-  addDoc,
-  collection,
-  serverTimestamp
-} from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { useAtom, useAtomValue } from 'jotai';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -23,6 +19,7 @@ import { isOpenAtom } from '../atoms/modalAtom';
 import { postIdAtom } from '../atoms/postIdAtom';
 import { db } from '../firebase';
 import usePost from '../hooks/usePost';
+import { darkModeAtom } from '../atoms/themeAtom';
 
 dayjs.extend(relativeTime);
 const DialogDemo = () => {
@@ -44,7 +41,7 @@ const DialogDemo = () => {
   //   }
   // }, []);
 
-  const { post, updateRepliesCount } = usePost(postId)
+  const { post, updateRepliesCount } = usePost(postId);
 
   const sendReply = async () => {
     await addDoc(collection(db, `posts/${postId}/replies`), {
@@ -54,7 +51,7 @@ const DialogDemo = () => {
       userImg: session?.user?.image,
       timestamp: serverTimestamp(),
     });
-    await updateRepliesCount()
+    await updateRepliesCount();
     // await updateDoc(doc(db, `posts/${postId}`), {
     //   repliesCount: increment(1),
     // });
@@ -76,13 +73,21 @@ const DialogDemo = () => {
     router.push(`/${post?.tag}/${postId}`);
   };
 
+  // ???
+  const darkMode = useAtomValue(darkModeAtom);
+  console.log('modal, darkMode', darkMode);
   return (
     <Dialog.Root open={isOpen}>
       <Dialog.Portal>
-        <Dialog.Overlay
-          className={`sm:bg-gray-800 bg-black sm:opacity-25 opacity-100 data-[state=open]:animate-overlayShow fixed inset-0`}
-        />
-        <Dialog.Content className="data-[state=open]:animate-contentShow fixed z-100 top-[30%] sm:left-[50%]  left-[48%] w-[90vw] max-w-[600px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-black sm:pt-14 sm:px-[10px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none text-white">
+        <Dialog.Overlay className="bg-black sm:opacity-80  fixed inset-0" />
+        <Dialog.Content
+          className={`data-[state=open]:animate-contentShow ${
+            darkMode ? 'bg-black text-white' : 'bg-white text-black'
+          } text-black fixed z-[150] 
+        top-[30%] sm:left-[50%]  left-[48%] w-[90vw] max-w-[600px] translate-x-[-50%] 
+        translate-y-[-50%] rounded-[6px] sm:pt-14 sm:px-[10px] 
+        shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none dark:text-white`}
+        >
           <div className="flex space-x-2">
             <div className="flex flex-col items-center">
               <span>
@@ -91,7 +96,7 @@ const DialogDemo = () => {
                   className="h-12 w-12 rounded-full"
                 />
               </span>
-              <span className="h-12 bg-gray-200 w-[1px] my-1" />
+              <span className="h-12 dark:bg-gray-200 bg-gray-700 w-[1px] my-1" />
               <span>
                 <img
                   src={session?.user?.image}
@@ -134,7 +139,7 @@ const DialogDemo = () => {
                   <MapPinIcon className="h-5" />
                 </div>
                 <button
-                  className="hidden sm:inline px-3 py-1 bg-twitterBlue rounded-full disabled:opacity-50"
+                  className="hidden sm:inline px-3 py-1 bg-twitterBlue rounded-full disabled:opacity-50 text-white dark:text-black"
                   disabled={text.trim().length === 0}
                   onClick={sendReply}
                 >
@@ -145,7 +150,9 @@ const DialogDemo = () => {
           </div>
           <Dialog.Close asChild>
             <div
-              className="justify-between  sm:p-0 absolute sm:top-[10px] sm:left-[10px] -top-14 -left-5 inline-flex w-full pl-3 pt-1"
+              className={`justify-between  sm:p-0 absolute sm:top-[10px] sm:left-[10px] -top-14 -left-5 inline-flex w-full pl-3 pt-1 ${
+                darkMode ? 'text-white' : 'text-black'
+              }`}
               aria-label="Close"
             >
               <div
@@ -156,7 +163,7 @@ const DialogDemo = () => {
                 <ArrowLeftIcon className="h-5 sm:hidden ml-1" />
               </div>
               <button
-                className="sm:hidden px-2 bg-twitterBlue rounded-full disabled:opacity-80 -mr-8"
+                className="sm:hidden px-2 bg-twitterBlue rounded-full disabled:opacity-80 -mr-8 text-white dark:text-black"
                 disabled={text.trim().length === 0}
                 onClick={sendReply}
               >

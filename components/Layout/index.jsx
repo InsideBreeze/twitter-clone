@@ -7,29 +7,32 @@ import { isOpenAtom } from '../../atoms/modalAtom';
 import { useSession } from 'next-auth/react';
 import Login from '../Login';
 import Modal from '../Modal';
+import { darkModeAtom } from '../../atoms/themeAtom';
 
 const Layout = ({ trendingResults, followResults, children, providers }) => {
   const isOpen = useAtomValue(isOpenAtom);
 
   const { data: session } = useSession();
 
+  const darkMode = useAtomValue(darkModeAtom);
+
   if (!session) {
     return <Login providers={providers} />;
   }
 
   return (
-    <div className="bg-[black] h-screen min-h-screen">
+    <div className={`h-screen min-h-screen ${darkMode && 'dark'} text-black`}>
       <Head>
         <title>Twitter clone</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex min-h-screen bg-[black] h-screen">
+      <main className="flex min-h-screen dark:bg-zinc-900 h-screen bg-white">
         {/* sidebar */}
         <Sidebar />
 
         <div
-          className="text-white xl:ml-[250px] md:ml-[110px] sm:ml-14 border-gray-600 sm:border-l
+          className="text-white xl:ml-[250px] md:ml-[110px] sm:ml-14 dark:border-gray-600 sm:border-l
         md:border-r flex-1 overflow-y-scroll scrollbar-hide w-[700px]"
         >
           {children}

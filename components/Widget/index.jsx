@@ -1,12 +1,19 @@
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import React from "react";
-import Trending from "./Trending";
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import React from 'react';
+import Trending from './Trending';
+import { useAtomValue } from 'jotai';
+import { isOpenAtom } from '../../atoms/modalAtom';
 
 const Widget = ({ trendingResults, followResults }) => {
+  const isOpen = useAtomValue(isOpenAtom);
   return (
-    <div className="lg:flex lg:flex-col text-white lg:w-[400px] hidden overflow-y-scroll scrollbar-hide justify-start">
+    <div className="lg:flex lg:flex-col dark:text-white lg:w-[400px] hidden overflow-y-scroll scrollbar-hide justify-start">
       {/* Search */}
-      <div className="flex bg-[#202327]  items-center p-3 mt-2 mx-[28px] rounded-full sticky top-2 z-50">
+      <div
+        className={`flex dark:bg-[#202327]  bg-gray-100 items-center p-3 mt-2 mx-[28px] rounded-full
+${isOpen ? 'z-0' : 'z-50'} sticky top-2 shadow-sm
+      `}
+      >
         <MagnifyingGlassIcon className="h-6 w-6" />
         <input
           className="w-full ml-2 bg-transparent outline-none"
@@ -14,7 +21,7 @@ const Widget = ({ trendingResults, followResults }) => {
         />
       </div>
       {/* Trendings */}
-      <div className="text-white mx-[28px] bg-[#202327] mt-3 rounded-xl">
+      <div className="dark:text-white mx-[28px] dark:bg-[#202327] bg-gray-100 mt-3 rounded-xl pl-2">
         <p className="font-semibold text-xl mb-1 p-2">Trends for you</p>
         {trendingResults &&
           trendingResults.map((trending) => (
@@ -23,7 +30,7 @@ const Widget = ({ trendingResults, followResults }) => {
       </div>
 
       {/* Who to follow */}
-      <div className="mx-[28px] bg-[#202327] mt-2 rounded-xl">
+      <div className="mx-[28px] dark:bg-[#202327] bg-gray-100 mt-2 rounded-xl pl-2">
         <p className="font-semibold text-xl mb-1 p-2">Who to follow</p>
         {followResults &&
           followResults.map((follow) => (

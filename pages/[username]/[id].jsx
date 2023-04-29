@@ -57,7 +57,7 @@ const PostPage = () => {
 
   return (
     <>
-      <div className="flex items-center p-2 space-x-4">
+      <div className="flex items-center p-2 space-x-4 text-black dark:text-white">
         <Link
           className="p-2 cursor-pointer hover:bg-gray-300 rounded-full hover:bg-opacity-20"
           href="/"
@@ -70,7 +70,7 @@ const PostPage = () => {
         <Post id={id} post={post} isPostPage repliesCount={replies.length} />
       )}
       {/* input */}
-      <div className="flex items-center p-2 border-b border-gray-600">
+      <div className="flex items-center p-2 border-b dark:border-gray-600">
         <img
           src={session?.user?.image}
           alt=""
@@ -81,7 +81,9 @@ const PostPage = () => {
             value={reply}
             onChange={(e) => setReply(e.target.value)}
             rows={2}
-            className="w-full bg-transparent outline-none placeholder:text-xl scrollbar-hide mt-2 min-h-[15px]"
+            className="w-full bg-transparent outline-none placeholder:text-lg scrollbar-hide mt-3 min-h-[15px]
+placeholder:text-gray-600 dark:placeholder:text-gray-400 text-black dark:text-white text-lg ml-1
+            "
             placeholder="Tweet your reply"
           />
         </div>
