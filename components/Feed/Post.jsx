@@ -124,6 +124,8 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
             <div
               className="items-center justify-center p-[7px] hover:bg-[#0D9BF0] hover:text-[#0D9BF0] hover:bg-opacity-20 rounded-full"
               onClick={(e) => {
+                //https://stackoverflow.com/questions/66037381/next-js-stop-propagation-on-a-nested-link-element
+                e.preventDefault();
                 e.stopPropagation();
                 setIsOpen(true);
                 setPostId(id);
