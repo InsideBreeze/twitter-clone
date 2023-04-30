@@ -35,7 +35,7 @@ ${isOpen ? 'z-0' : 'z-50'} sticky top-2 shadow-sm
         {followResults &&
           followResults.map((follow) => (
             <div
-              className="flex items-center mb-2 hover:bg-opacity-5 cursor-pointer hover:bg-gray-300 p-2 rounded-md transition-all ease-out duration-100"
+              className="flex items-center mb-2 dark:hover:bg-opacity-5 hover:bg-opacity-60 cursor-pointer hover:bg-gray-300 p-2 rounded-md transition-all ease-out duration-100"
               key={follow.username}
             >
               <img

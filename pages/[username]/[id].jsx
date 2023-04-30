@@ -16,6 +16,7 @@ import PostSpin from '../../components/Feed/Spinner';
 import Reply from '../../components/Reply';
 import { db } from '../../firebase';
 import usePost from '../../hooks/usePost';
+import Head from 'next/head';
 
 const PostPage = () => {
   const [replies, setReplies] = useState([]);
@@ -57,6 +58,11 @@ const PostPage = () => {
 
   return (
     <>
+      <Head>
+        <title>
+          {post?.posterName} on Twitter: "{post?.text}"
+        </title>
+      </Head>
       <div className="flex items-center p-2 space-x-4 text-black dark:text-white">
         <Link
           className="p-2 cursor-pointer hover:bg-gray-300 rounded-full hover:bg-opacity-20"

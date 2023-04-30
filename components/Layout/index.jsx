@@ -24,6 +24,10 @@ const Layout = ({ trendingResults, followResults, children, providers }) => {
     <div className={`h-screen min-h-screen ${darkMode && 'dark'} text-black`}>
       <Head>
         <title>Twitter clone</title>
+        <meta
+          name="description"
+          content="a simple twitter clone used for learning"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
