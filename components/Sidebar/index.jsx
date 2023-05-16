@@ -13,6 +13,8 @@ import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React from 'react';
 import SidebarLink from './SidebarLink';
+import Image from 'next/image'
+import Logo from '../../public/images/twitter-logo.svg'
 
 const Sidebar = () => {
   const { data: session } = useSession();
@@ -20,9 +22,9 @@ const Sidebar = () => {
   return (
     <div className="hidden sm:flex flex-col xl:w-[250px]  md:pl-10 md:w-[110px] items-start pt-2 fixed xl:pl-4 h-full sm:w-14">
       <div className="p-3 hoverAnimation" onClick={() => router.push('/')}>
-        <img
+        <Image
           //src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
-          src="/images/twitter-logo.svg"
+          src={Logo}
           alt=""
           className="w-8 h-8"
         />

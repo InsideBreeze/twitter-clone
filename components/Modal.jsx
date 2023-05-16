@@ -50,12 +50,12 @@ const DialogDemo = () => {
     <Dialog.Root open={isOpen}>
       <Dialog.Portal>
         <Dialog.Overlay
-          className="bg-black sm:opacity-80  fixed inset-0" />
+          className={`${darkMode ? 'bg-black' : 'bg-white'} sm:opacity-80  fixed inset-0`} />
         <Dialog.Content
           className={` ${darkMode ? 'bg-black text-white' : 'bg-white text-black'
             } text-black fixed z-[150] 
         top-[30%] sm:left-[50%]  left-[48%] w-[90vw] max-w-[600px] translate-x-[-50%] 
-        translate-y-[-50%] rounded-[6px] sm:pt-14 sm:px-[10px] 
+        translate-y-[-50%] rounded-[6px] p-4 sm:pt-14 sm:px-[10px] 
         shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none dark:text-white`}
         >
           <div className="flex space-x-2">
@@ -120,12 +120,12 @@ const DialogDemo = () => {
           </div>
           <Dialog.Close asChild>
             <div
-              className={`justify-between  sm:p-0 absolute sm:top-[10px] sm:left-[10px] -top-14 -left-5 inline-flex w-full pl-3 pt-1 ${darkMode ? 'text-white' : 'text-black'
+              className={`justify-between  sm:p-0 absolute  sm:top-[10px] sm:left-[10px] -top-14 -left-5 inline-flex w-full pl-3 pt-1 ${darkMode ? 'text-white' : 'text-black'
                 }`}
               aria-label="Close"
             >
               <div
-                className="hover:bg-gray-600 p-1 appearance-none items-center rounded-full focus:outline-none hover:bg-opacity-40"
+                className={`hover:bg-gray-600 p-1 ${darkMode ? 'text-white' : 'text-black'}  appearance-none items-center rounded-full focus:outline-none hover:bg-opacity-40 `}
                 onClick={() => setIsOpen(false)}
               >
                 <XMarkIcon className="h-6 hidden sm:inline" />

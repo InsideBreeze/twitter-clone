@@ -1,5 +1,7 @@
-import { getProviders, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import Head from "next/head";
+import Image from 'next/image'
+import Logo from '../public/images/twitter-icon.jpg'
 
 // how to make this component ssr?
 const Login = ({ providers }) => {
@@ -11,9 +13,11 @@ const Login = ({ providers }) => {
             <Head>
               <title>Login</title>
             </Head>
-            <img
+            <Image
+              width={200}
+              height={200}
               alt=""
-              src="https://icon-library.com/images/twitter-icon-svg/twitter-icon-svg-28.jpg"
+              src={Logo}
               className="h-[150px] w-[150px]"
             />
             {Object.values(providers).map((provider) => (
