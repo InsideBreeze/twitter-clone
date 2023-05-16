@@ -1,6 +1,6 @@
 import { doc, getDoc, increment, updateDoc } from 'firebase/firestore';
 import { useAtom } from 'jotai';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import postState from '../atoms/postState';
 import { db } from '../firebase';
 
@@ -16,7 +16,7 @@ const usePost = (postId) => {
     }
   }, []);
 
-  const updateRepliesCount = async () => {
+  const updateRepliesCount = useCallback(async () => {
     await updateDoc(doc(db, `posts/${postId}`), {
       repliesCount: increment(1),
     });
@@ -27,14 +27,14 @@ const usePost = (postId) => {
         prev.map((p) =>
           p.id === postId
             ? {
-                ...p,
-                repliesCount: p.repliesCount + 1,
-              }
+              ...p,
+              repliesCount: p.repliesCount + 1,
+            }
             : p
         )
       );
     }
-  };
+  }, [posts, postId]);
 
   return {
     post,

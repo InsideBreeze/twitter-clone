@@ -1,6 +1,6 @@
 import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import { useAtom } from 'jotai';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import postState from '../../atoms/postState';
 import { db } from '../../firebase';
 import Header from './Header';
@@ -10,8 +10,7 @@ import PostSpiner from './Spinner';
 
 const Feed = () => {
   const [posts, setPosts] = useAtom(postState);
-  const q = query(collection(db, 'posts'), orderBy('timestamp', 'desc'));
-
+  const q = useMemo(() => query(collection(db, 'posts'), orderBy('timestamp', 'desc')), []);
   useEffect(() => {
     if (!posts) {
       getDocs(q).then((snapshot) => {

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import {
   ArrowsRightLeftIcon,
   ChartBarIcon,
@@ -13,8 +14,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import { useSetAtom } from 'jotai';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React from 'react';
+import * as React from 'react';
 import { isOpenAtom } from '../../atoms/modalAtom';
 import { postIdAtom } from '../../atoms/postIdAtom';
 import postState from '../../atoms/postState';
@@ -28,17 +28,13 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
   const setIsOpen = useSetAtom(isOpenAtom);
   const setPostId = useSetAtom(postIdAtom);
 
-  const router = useRouter();
-
   const liked = post.likes.findIndex((id) => id === session?.user?.uid) !== -1;
 
+  const [imageLoading, setimageLoading] = React.useState(true)
+
   const handleLike = async (e) => {
-    e.stopPropagation();
+    e.preventDefault()
     if (liked) {
-      console.log(
-        'newLikes',
-        post.likes.filter((id) => id !== session?.user?.uid)
-      );
       const newLikes = post.likes.filter((id) => id !== session?.user?.uid);
       await updateDoc(doc(db, `posts/${id}`), {
         likes: newLikes,
@@ -47,9 +43,9 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
         prev.map((p) =>
           p.id === id
             ? {
-                ...p,
-                likes: newLikes,
-              }
+              ...p,
+              likes: newLikes,
+            }
             : p
         )
       );
@@ -61,9 +57,9 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
         prev.map((p) =>
           p.id === id
             ? {
-                ...p,
-                likes: p.likes.concat(session?.user?.uid),
-              }
+              ...p,
+              likes: p.likes.concat(session?.user?.uid),
+            }
             : p
         )
       );
@@ -103,12 +99,14 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
           <div className={`${!isPostPage && '-mt-4'}`}>
             <p className="text-black dark:text-white">{post.text}</p>
             {post.image && (
-              <img
+              <Image
                 src={post.image}
                 alt="post image"
                 height={350}
                 width={350}
-                className="max-h-[350px] max-w-[350px] rounded-sm mt-1 mb-2"
+                className={`max-h-[350px] max-w-[350px] rounded-sm mt-1 mb-2 
+${imageLoading && "scale-80 blur-xl"}`}
+                onLoadingComplete={() => setimageLoading(false)}
               />
             )}
             <time
@@ -126,7 +124,6 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
               onClick={(e) => {
                 //https://stackoverflow.com/questions/66037381/next-js-stop-propagation-on-a-nested-link-element
                 e.preventDefault();
-                e.stopPropagation();
                 setIsOpen(true);
                 setPostId(id);
               }}
@@ -143,7 +140,7 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
               <TrashIcon
                 className="h-5"
                 onClick={async (e) => {
-                  e.stopPropagation();
+                  e.preventDefault()
                   await deleteDoc(doc(db, 'posts', id));
                   setPosts((prev) => prev.filter((e) => e.id !== id));
                 }}
@@ -158,7 +155,7 @@ const Post = ({ post: { id, ...post }, isPostPage, repliesCount }) => {
           <div className="flex items-center justify-center">
             <div
               className="flex items-center hover:bg-[#f91880] p-[7px] hover:text-[#f91880] hover:bg-opacity-20 rounded-full"
-              onClick={handleLike}
+              onClick={(e) => handleLike(e)}
             >
               {liked ? (
                 <FilledHeartIcon className="h-5 text-[#f91880]" />

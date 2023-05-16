@@ -10,7 +10,7 @@ import {
 import { getProviders, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Post from '../../components/Feed/Post';
 import PostSpin from '../../components/Feed/Spinner';
 import Reply from '../../components/Reply';
@@ -26,10 +26,10 @@ const PostPage = () => {
   const [reply, setReply] = useState('');
 
   const { post, updateRepliesCount } = usePost(id);
-  const q = query(
+  const q = useMemo(() => query(
     collection(db, 'posts', id, 'replies'),
     orderBy('timestamp', 'desc')
-  );
+  ), [id]);
 
   useEffect(
     () =>
@@ -87,7 +87,7 @@ const PostPage = () => {
             value={reply}
             onChange={(e) => setReply(e.target.value)}
             rows={2}
-            className="w-full bg-transparent outline-none placeholder:text-lg scrollbar-hide mt-3 min-h-[15px]
+            className="w-full bg-transparent outline-none placeholder:text-lg scrollbar-hide mt-3 min-h-[15px] max-h-[56px]
 placeholder:text-gray-600 dark:placeholder:text-gray-400 text-black dark:text-white text-lg ml-1
             "
             placeholder="Tweet your reply"

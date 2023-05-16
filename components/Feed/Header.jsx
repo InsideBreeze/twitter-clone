@@ -7,12 +7,10 @@ import { isOpenAtom } from '../../atoms/modalAtom';
 const Header = () => {
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
   const isOpen = useAtomValue(isOpenAtom);
-  console.log('isOpen', isOpen);
   return (
     <header
-      className={`flex justify-between px-5 h-14 border-b dark:border-gray-600 ${
-        isOpen ? 'z-0' : 'z-50'
-      } sticky top-0 dark:bg-zinc-900 bg-white text-black dark:text-white`}
+      className={`flex justify-between px-5 h-14 border-b dark:border-gray-600 ${isOpen ? 'z-0' : 'z-50'
+        } sticky top-0 dark:bg-zinc-900 bg-white text-black dark:text-white`}
     >
       <div className="pt-3 font-semibold">Home</div>
       <div
